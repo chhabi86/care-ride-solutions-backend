@@ -1,0 +1,60 @@
+name: Backend Deploy
+
+on:
+  workflow_dispatch:
+    inputs:
+      ref:
+        description: 'Git ref (branch, tag, or commit) to deploy'
+        required: false
+        default: 'main'
+      run_healthcheck:
+        type: boolean
+        required: false
+        default: true
+        description: 'Run post-deploy healthcheck'
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment: production
+    permissions:
+      contents: read
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.ref }}
+
+      - name: Set up SSH key
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.DEPLOY_SSH_KEY }}
+
+      - name: Known Hosts (Optional Strict)
+        run: |
+          ssh-keyscan -H ${{ secrets.DEPLOY_HOST }} >> ~/.ssh/known_hosts
+
+      - name: Sync Repo to Remote
+        run: |
+          ssh ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} "set -euo pipefail; if [ ! -d /opt/backend ]; then sudo mkdir -p /opt/backend; sudo chown ${{ secrets.DEPLOY_USER }} /opt/backend; fi"
+          rsync -az --delete --exclude 'target/' ./ ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}:/opt/backend/repo/
+
+      - name: Remote Build & Restart
+        run: |
+          ssh ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} "set -euo pipefail; cd /opt/backend/repo; if [ -x ./mvnw ]; then ./mvnw -q clean package -DskipTests || mvn -q clean package -DskipTests; else mvn -q clean package -DskipTests; fi; cp target/*.war /opt/backend/app.war; sudo systemctl restart care-ride-backend"
+
+      - name: Post-Deploy Healthcheck
+        if: inputs.run_healthcheck == true
+        run: |
+          for i in {1..15}; do
+            STATUS=$(curl -fsS -o /dev/null -w '%{http_code}' https://${{ secrets.DOMAIN }}/api/actuator/health || true)
+            if [ "$STATUS" = "200" ]; then
+              echo "Healthy (200)"; exit 0; fi; echo "Attempt $i: status=$STATUS"; sleep 4;
+          done; echo "Healthcheck failed"; exit 1
+
+      - name: Summary
+        if: always()
+        run: |
+          echo "### Backend Deploy" >> $GITHUB_STEP_SUMMARY
+          echo "Ref: ${{ inputs.ref }}" >> $GITHUB_STEP_SUMMARY

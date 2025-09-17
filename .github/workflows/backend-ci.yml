@@ -1,0 +1,56 @@
+name: Backend CI
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'pom.xml'
+      - 'src/**'
+      - '.github/workflows/backend-ci.yml'
+  pull_request:
+    branches: [ main ]
+    paths:
+      - 'pom.xml'
+      - 'src/**'
+  workflow_dispatch:
+
+jobs:
+  build-test:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Set up JDK 17
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+          cache: 'maven'
+
+      - name: Build & Test
+        run: mvn -B -q clean verify
+
+      - name: Package (skip tests)
+        run: mvn -B -q package -DskipTests
+
+      - name: Upload Artifact (WAR)
+        uses: actions/upload-artifact@v4
+        with:
+          name: backend-war
+          path: target/*.war
+          retention-days: 7
+
+      - name: Extract Build Info
+        id: buildinfo
+        run: |
+          echo "commit_sha=${GITHUB_SHA}" >> $GITHUB_OUTPUT
+          echo "artifact_name=$(ls target/*.war | head -n1)" >> $GITHUB_OUTPUT
+
+      - name: Summary
+        run: |
+          echo "### Backend Build" >> $GITHUB_STEP_SUMMARY
+          echo "Artifact: ${{ steps.buildinfo.outputs.artifact_name }}" >> $GITHUB_STEP_SUMMARY
+          echo "Commit: ${{ steps.buildinfo.outputs.commit_sha }}" >> $GITHUB_STEP_SUMMARY
