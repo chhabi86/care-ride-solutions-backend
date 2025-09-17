@@ -54,3 +54,16 @@ jwt:
 # Enable CORS for local development
 cors:
   allowed-origins: http://localhost:4200,http://localhost:4201
+
+# Actuator management endpoints (local only)
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always
+  info:
+    env:
+      enabled: true
