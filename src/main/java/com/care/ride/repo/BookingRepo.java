@@ -1,0 +1,1 @@
+package com.care.ride.repo;import com.care.ride.domain.Booking;import org.springframework.data.jpa.repository.JpaRepository;public interface BookingRepo extends JpaRepository<Booking,Long>{}

@@ -1,0 +1,46 @@
+services:
+  db:
+    image: postgres:15
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: caredb
+      POSTGRES_USER: careuser
+      POSTGRES_PASSWORD: changeme_db_password
+    ports:
+      - "5432:5432"
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    networks:
+      - care-net
+
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    restart: unless-stopped
+    env_file:
+      - ./backend.env
+    depends_on:
+      - db
+    ports:
+      - '8080:8080'
+    networks:
+      - care-net
+
+  frontend:
+    build:
+      context: ../frontend
+      dockerfile: Dockerfile.prod
+    restart: unless-stopped
+    ports:
+      - '3000:80'
+    networks:
+      - care-net
+
+
+volumes:
+  db-data:
+
+networks:
+  care-net:
+    driver: bridge

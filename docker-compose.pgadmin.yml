@@ -1,0 +1,13 @@
+services:
+  pgadmin:
+    image: dpage/pgadmin4
+    restart: unless-stopped
+    environment:
+      PGADMIN_DEFAULT_EMAIL: admin@careride.com
+      PGADMIN_DEFAULT_PASSWORD: admin
+    depends_on:
+      - db
+    ports:
+      - "${PGADMIN_PORT:-5050}:80"
+    networks:
+      - care-net

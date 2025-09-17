@@ -1,0 +1,5 @@
+<!-- Add this dependency to your backend/pom.xml to enable email sending -->
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-mail</artifactId>
+</dependency>
