@@ -3,9 +3,6 @@ package com.care.ride.config;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
-import org.springframework.http.HttpMethod;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
@@ -19,28 +16,14 @@ public class SecurityConfig {
         http
             // disable CSRF for API testing in local/dev environment
             .csrf(csrf -> csrf.disable())
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/login", "/error", "/css/**", "/js/**", "/images/**").permitAll()
-                // allow public access to the minimal API endpoints used by the public frontend
-                // expose actuator health (and info) for external health checks
-                .requestMatchers("/actuator/health", "/actuator/health/**", "/actuator/info").permitAll()
-                .requestMatchers(HttpMethod.GET, "/api/services").permitAll()
-                .requestMatchers(HttpMethod.POST, "/api/bookings").permitAll()
-                .requestMatchers(HttpMethod.POST, "/api/contact").permitAll()
-                .anyRequest().authenticated()
-            )
-            .formLogin(form -> form.permitAll())
-            .logout(logout -> logout.permitAll());
+            .authorizeHttpRequests(auth -> auth.anyRequest().permitAll());
         return http.build();
     }
 
     @Bean
     public UserDetailsService userDetailsService(PasswordEncoder passwordEncoder) {
-        UserDetails user = User.withUsername("testuser")
-                .password(passwordEncoder.encode("testpass"))
-                .roles("USER")
-                .build();
-        return new InMemoryUserDetailsManager(user);
+    // No users required; API is public. Keep an empty manager bean to satisfy any potential autowiring.
+    return new InMemoryUserDetailsManager();
     }
 
     @Bean
