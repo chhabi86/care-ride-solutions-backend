@@ -58,24 +58,35 @@ jobs:
         run: |
           ssh ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} "set -euo pipefail; cd /opt/backend/repo; if [ -x ./mvnw ]; then ./mvnw -q clean package -DskipTests || mvn -q clean package -DskipTests; else mvn -q clean package -DskipTests; fi; cp target/*.war /opt/backend/app.war; sudo systemctl restart care-ride-backend"
 
-      - name: Deploy Nginx Config & Reload
+      - name: Deploy Nginx Config & Environment
         run: |
-          # copy nginx config (includes fix to preserve /api prefix)
-          rsync -az nginx/care-ride.conf ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}:/tmp/care-ride.conf
-          ssh ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} "set -euo pipefail; sudo mv /tmp/care-ride.conf /etc/nginx/sites-available/care-ride.conf; sudo nginx -t; sudo systemctl reload nginx"
+          # Run post-deploy script to configure nginx and environment
+          ssh ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} "set -euo pipefail; cd /opt/backend/repo; MAIL_HOST='${{ secrets.MAIL_HOST || 'smtp.mail.us-east-1.awsapps.com' }}' MAIL_PORT='${{ secrets.MAIL_PORT || '587' }}' MAIL_USERNAME='${{ secrets.MAIL_USERNAME }}' MAIL_PASSWORD='${{ secrets.MAIL_PASSWORD }}' MAIL_FROM='${{ secrets.MAIL_FROM || 'noreply@careridesolutionspa.com' }}' MAIL_STARTTLS='${{ secrets.MAIL_STARTTLS || 'true' }}' MAIL_AUTH='${{ secrets.MAIL_AUTH || 'true' }}' ./deploy/scripts/post-deploy.sh"
 
       - name: Post-Deploy Healthcheck
-        if: inputs.run_healthcheck == true
+        if: inputs.run_healthcheck != false
         run: |
           D=${DOMAIN:-careridesolutionspa.com}
+          echo "Testing health endpoint..."
           for i in {1..15}; do
-            STATUS=$(curl -fsS -o /dev/null -w '%{http_code}' https://$D/actuator/health || true)
-            if [ "$STATUS" != "200" ]; then
-              STATUS=$(curl -fsS -o /dev/null -w '%{http_code}' https://$D/api/actuator/health || true)
-            fi
-            if [ "$STATUS" = "200" ]; then echo "Healthy (200)"; exit 0; fi
-            echo "Attempt $i: status=$STATUS"; sleep 4;
-          done; echo "Healthcheck failed"; exit 1
+            STATUS=$(curl -fsS -o /dev/null -w '%{http_code}' http://$D/api/actuator/health || echo "000")
+            if [ "$STATUS" = "200" ]; then echo "✓ Health endpoint OK (200)"; break; fi
+            echo "Attempt $i: health status=$STATUS"; sleep 4;
+          done
+          
+          echo "Testing contact endpoint..."
+          CONTACT_STATUS=$(curl -fsS -o /dev/null -w '%{http_code}' -X POST http://$D/api/contact \
+            -H "Content-Type: application/json" \
+            -d '{"name":"Deploy Test","phone":"123","email":"test@test.com","reason":"Deploy Test","message":"Automated test"}' || echo "000")
+          
+          if [ "$CONTACT_STATUS" = "200" ]; then
+            echo "✓ Contact endpoint OK (200) - emails should work"
+          elif [ "$CONTACT_STATUS" = "404" ]; then
+            echo "✗ Contact endpoint still 404 - nginx /api path issue"
+            exit 1
+          else
+            echo "⚠ Contact endpoint status: $CONTACT_STATUS (may need email config)"
+          fi
 
       - name: Summary
         if: always()

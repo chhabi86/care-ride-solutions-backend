@@ -1,0 +1,60 @@
+
+server:
+  port: 8080
+spring:
+  datasource:
+    # Prefer full SPRING_DATASOURCE_URL if provided, otherwise build from DB_* pieces (default service name 'db').
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://${DB_HOST:db}:${DB_PORT:5432}/${DB_NAME:caredb}}
+    username: ${SPRING_DATASOURCE_USERNAME:${DB_USER:careuser}}
+    password: ${SPRING_DATASOURCE_PASSWORD:${DB_PASS:changeme_db_password}}
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        show_sql: false
+  flyway:
+    enabled: false
+  mail:
+    # AWS WorkMail SMTP configuration
+    host: ${MAIL_HOST:smtp.mail.us-east-1.awsapps.com}
+    port: ${MAIL_PORT:465}
+    username: ${MAIL_USERNAME:info@careridesolutionspa.com}
+    password: ${MAIL_PASSWORD:}
+    protocol: smtp
+    properties:
+      mail:
+        smtp:
+          auth: true
+          from: ${MAIL_USERNAME:info@careridesolutionspa.com}
+          ssl:
+            enable: true
+          socketFactory:
+            class: javax.net.ssl.SSLSocketFactory
+            port: 465
+        debug: ${MAIL_DEBUG:false}
+jwt:
+  secret: ${JWT_SECRET:CHANGE_ME}
+
+# Actuator management (production)
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: when-authorized
+      probes:
+        enabled: true
+      group:
+        readiness:
+          include: db
+        liveness:
+          include: ping
+  health:
+    mail:
+      enabled: false
+    db:
+      enabled: true
+

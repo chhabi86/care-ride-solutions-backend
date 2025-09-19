@@ -1,0 +1,71 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    # H2 in-memory database for local development
+    url: jdbc:h2:mem:caredb;DB_CLOSE_DELAY=-1;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+    password: 
+    driver-class-name: org.h2.Driver
+  jpa:
+    hibernate:
+      ddl-auto: create-drop
+    properties:
+      hibernate:
+        show_sql: true
+        format_sql: true
+    database-platform: org.hibernate.dialect.H2Dialect
+  h2:
+    console:
+      enabled: true
+      path: /h2-console
+  flyway:
+    enabled: false
+  mail:
+    # AWS WorkMail SMTP for local development.
+    # NOTE: Credentials removed from VCS. Provide via environment variables or a personal untracked override file.
+    # You can export MAIL_USERNAME / MAIL_PASSWORD before running the app, or create a local 'application-local-mail.yml' (gitignored) to override.
+    host: ${MAIL_HOST:smtp.mail.us-east-1.awsapps.com}
+    port: ${MAIL_PORT:465}
+    username: ${MAIL_USERNAME:change-me-local}
+    password: ${MAIL_PASSWORD:change-me-password}
+    protocol: smtp
+    properties:
+      mail:
+        smtp:
+          auth: true
+          from: ${MAIL_FROM:${MAIL_USERNAME:change-me-local}}
+          ssl:
+            enable: true
+          socketFactory:
+            class: javax.net.ssl.SSLSocketFactory
+            port: ${MAIL_PORT:465}
+        debug: ${MAIL_DEBUG:true}
+
+# Logging configuration
+logging:
+  level:
+    com.care.ride.service.EmailService: DEBUG
+    org.springframework.mail: DEBUG
+    javax.mail: DEBUG
+
+jwt:
+  secret: local_development_secret_key_change_in_production
+
+# Enable CORS for local development
+cors:
+  allowed-origins: http://localhost:4200,http://localhost:4201
+
+# Actuator management endpoints (local only)
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+  endpoint:
+    health:
+      show-details: always
+  info:
+    env:
+      enabled: true
