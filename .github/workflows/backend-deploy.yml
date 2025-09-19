@@ -58,6 +58,12 @@ jobs:
         run: |
           ssh ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} "set -euo pipefail; cd /opt/backend/repo; if [ -x ./mvnw ]; then ./mvnw -q clean package -DskipTests || mvn -q clean package -DskipTests; else mvn -q clean package -DskipTests; fi; cp target/*.war /opt/backend/app.war; sudo systemctl restart care-ride-backend"
 
+      - name: Deploy Nginx Config & Reload
+        run: |
+          # copy nginx config (includes fix to preserve /api prefix)
+          rsync -az nginx/care-ride.conf ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}:/tmp/care-ride.conf
+          ssh ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} "set -euo pipefail; sudo mv /tmp/care-ride.conf /etc/nginx/sites-available/care-ride.conf; sudo nginx -t; sudo systemctl reload nginx"
+
       - name: Post-Deploy Healthcheck
         if: inputs.run_healthcheck == true
         run: |
