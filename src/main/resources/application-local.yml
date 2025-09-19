@@ -23,23 +23,25 @@ spring:
   flyway:
     enabled: false
   mail:
-    # AWS WorkMail SMTP for local development
-    host: smtp.mail.us-east-1.awsapps.com
-    port: 465
-    username: info@careridesolutionspa.com
-    password: Transportation1@@
+    # AWS WorkMail SMTP for local development.
+    # NOTE: Credentials removed from VCS. Provide via environment variables or a personal untracked override file.
+    # You can export MAIL_USERNAME / MAIL_PASSWORD before running the app, or create a local 'application-local-mail.yml' (gitignored) to override.
+    host: ${MAIL_HOST:smtp.mail.us-east-1.awsapps.com}
+    port: ${MAIL_PORT:465}
+    username: ${MAIL_USERNAME:change-me-local}
+    password: ${MAIL_PASSWORD:change-me-password}
     protocol: smtp
     properties:
       mail:
         smtp:
           auth: true
-          from: info@careridesolutionspa.com
+          from: ${MAIL_FROM:${MAIL_USERNAME:change-me-local}}
           ssl:
             enable: true
           socketFactory:
             class: javax.net.ssl.SSLSocketFactory
-            port: 465
-        debug: true
+            port: ${MAIL_PORT:465}
+        debug: ${MAIL_DEBUG:true}
 
 # Logging configuration
 logging:

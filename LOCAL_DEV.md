@@ -56,6 +56,30 @@ If no process/container → browser will show connection refused.
 - `GET /api/services` – simple read check
 - `POST /api/contact` – requires JSON body, sends/stores contact
 
+## Outbound Email (Local)
+The default `application-local.yml` no longer contains real SMTP credentials. To test email locally you have two options:
+
+1. Export environment variables before running Spring Boot:
+```bash
+export MAIL_HOST=smtp.mail.us-east-1.awsapps.com
+export MAIL_PORT=465
+export MAIL_USERNAME=info@careridesolutionsspa.com
+export MAIL_PASSWORD=your_smtp_password_here
+export MAIL_DEBUG=true
+mvn spring-boot:run -Dspring-boot.run.profiles=local
+```
+
+2. Or create a (gitignored) override file `src/main/resources/application-local-mail.yml` with:
+```yaml
+spring:
+    mail:
+        username: info@careridesolutionsspa.com
+        password: your_smtp_password_here
+```
+Spring will merge it automatically if you keep the `local` profile active.
+
+Never commit real SMTP passwords. Rotating credentials? Update the environment variables (or override file) and restart.
+
 ## Next Steps
 Consider adding Actuator for health checks: add dependency `spring-boot-starter-actuator` and hit `/actuator/health`.
 
