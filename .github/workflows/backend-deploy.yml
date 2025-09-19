@@ -67,7 +67,7 @@ jobs:
       - name: Post-Deploy Healthcheck
         if: inputs.run_healthcheck == true
         run: |
-          D=${DOMAIN:-careridesolutionsspa.com}
+          D=${DOMAIN:-careridesolutionspa.com}
           for i in {1..15}; do
             STATUS=$(curl -fsS -o /dev/null -w '%{http_code}' https://$D/actuator/health || true)
             if [ "$STATUS" != "200" ]; then

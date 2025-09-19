@@ -19,10 +19,10 @@ import java.util.List;
 @CrossOrigin(origins={
 	"http://localhost:4200",
 	"http://127.0.0.1:4201",
-	"http://careridesolutionsspa.com",
-	"https://careridesolutionsspa.com",
-	"http://www.careridesolutionsspa.com",
-	"https://www.careridesolutionsspa.com"
+	"http://careridesolutionspa.com",
+	"https://careridesolutionspa.com",
+	"http://www.careridesolutionspa.com",
+	"https://www.careridesolutionspa.com"
 })
 public class PublicController {
 	private final ServiceTypeRepo sRepo;
