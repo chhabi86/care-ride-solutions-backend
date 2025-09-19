@@ -17,6 +17,11 @@ if [[ ! -f "$NGINX_CONFIG_SOURCE" ]]; then
 fi
 
 echo "1. Updating nginx configuration..."
+# Backup existing config if it exists
+if [[ -f "$NGINX_CONFIG_TARGET" ]]; then
+    sudo cp "$NGINX_CONFIG_TARGET" "$NGINX_CONFIG_TARGET.backup.$(date +%Y%m%d_%H%M%S)"
+fi
+
 sudo cp "$NGINX_CONFIG_SOURCE" "$NGINX_CONFIG_TARGET"
 sudo chmod 644 "$NGINX_CONFIG_TARGET"
 
@@ -26,9 +31,34 @@ if [[ ! -L "$NGINX_ENABLED" ]]; then
     sudo ln -sf "$NGINX_CONFIG_TARGET" "$NGINX_ENABLED"
 fi
 
+# Check for duplicate upstream definitions and remove if needed
+echo "Checking for upstream conflicts..."
+UPSTREAM_COUNT=$(sudo nginx -T 2>/dev/null | grep -c "upstream.*backend_api\|upstream.*care_ride_backend" || echo "0")
+if [[ "$UPSTREAM_COUNT" -gt 1 ]]; then
+    echo "Warning: Multiple upstream definitions found. Nginx will handle this."
+fi
+
 # Test nginx configuration
 echo "2. Testing nginx configuration..."
-sudo nginx -t
+if ! sudo nginx -t; then
+    echo "Nginx configuration test failed. Checking for issues..."
+    echo "Full nginx config test output:"
+    sudo nginx -T 2>&1 | grep -E "emerg|error|duplicate" || true
+    
+    # Try to restore backup if it exists
+    LATEST_BACKUP=$(ls -t "$NGINX_CONFIG_TARGET".backup.* 2>/dev/null | head -1 || echo "")
+    if [[ -n "$LATEST_BACKUP" ]]; then
+        echo "Restoring previous config from: $LATEST_BACKUP"
+        sudo cp "$LATEST_BACKUP" "$NGINX_CONFIG_TARGET"
+        if sudo nginx -t; then
+            echo "Previous config restored successfully"
+            echo "ERROR: New nginx config has issues. Deployment stopped."
+            exit 1
+        fi
+    fi
+    echo "ERROR: Nginx configuration is invalid and cannot be fixed automatically"
+    exit 1
+fi
 
 echo "3. Reloading nginx..."
 sudo systemctl reload nginx
