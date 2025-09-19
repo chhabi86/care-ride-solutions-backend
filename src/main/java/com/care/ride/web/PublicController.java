@@ -16,7 +16,14 @@ import java.util.List;
 
 @RestController
 @RequestMapping("/api")
-@CrossOrigin(origins={"http://localhost:4200","http://127.0.0.1:4201"})
+@CrossOrigin(origins={
+	"http://localhost:4200",
+	"http://127.0.0.1:4201",
+	"http://careridesolutionsspa.com",
+	"https://careridesolutionsspa.com",
+	"http://www.careridesolutionsspa.com",
+	"https://www.careridesolutionsspa.com"
+})
 public class PublicController {
 	private final ServiceTypeRepo sRepo;
 	private final BookingRepo bRepo;
@@ -52,7 +59,7 @@ public class PublicController {
 		if (!emailOk) {
 			System.err.println("Warning: email send failed for contact id=" + saved.getId());
 		}
-		return ResponseEntity.created(URI.create("/api/contacts/"+saved.getId())).body(java.util.Map.of("status","sent","id",saved.getId(), "emailStatus", emailOk));
+		return ResponseEntity.ok(java.util.Map.of("status","sent","id",saved.getId(), "emailStatus", emailOk));
 	}
 
 	@GetMapping("/services")
