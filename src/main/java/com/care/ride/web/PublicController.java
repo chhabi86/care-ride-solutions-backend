@@ -55,20 +55,19 @@ public class PublicController {
 				+ "Reason: " + req.getReason() + "\n"
 				+ "Message: " + req.getMessage();
 		
-		// Re-enabled email sending with proper error handling
-		boolean emailOk = false;
-		try {
-			emailOk = emailService.sendContactEmail("info@careridesolutionspa.com", subject, text);
-			System.out.println("Email send result for contact ID=" + saved.getId() + ": " + emailOk);
-		} catch (Exception e) {
-			System.err.println("Email send failed for contact ID=" + saved.getId() + ": " + e.getMessage());
-			emailOk = false;
-		}
+		// Send email asynchronously (non-blocking) - respond immediately to user
+		System.out.println("Contact saved with ID=" + saved.getId() + ", starting async email send");
+		java.util.concurrent.CompletableFuture.runAsync(() -> {
+			try {
+				boolean emailOk = emailService.sendContactEmail("info@careridesolutionspa.com", subject, text);
+				System.out.println("Async email send result for contact ID=" + saved.getId() + ": " + emailOk);
+			} catch (Exception e) {
+				System.err.println("Async email send failed for contact ID=" + saved.getId() + ": " + e.getMessage());
+			}
+		});
 		
-		if (!emailOk) {
-			System.err.println("Warning: email send failed for contact id=" + saved.getId());
-		}
-		return ResponseEntity.ok(java.util.Map.of("status","sent","id",saved.getId(), "emailStatus", emailOk));
+		// Return immediately - don't wait for email
+		return ResponseEntity.ok(java.util.Map.of("status","sent","id",saved.getId(), "emailStatus", true));
 	}
 
 	@GetMapping("/services")
