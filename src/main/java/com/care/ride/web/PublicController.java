@@ -55,10 +55,15 @@ public class PublicController {
 				+ "Reason: " + req.getReason() + "\n"
 				+ "Message: " + req.getMessage();
 		
-		// TEMPORARY: Skip email sending to test if contact form works without email
-		// TODO: Re-enable email after fixing configuration
-		boolean emailOk = false; // emailService.sendContactEmail("info@careridesolutionspa.com", subject, text);
-		System.out.println("TEMP: Contact saved to DB with ID=" + saved.getId() + ", email disabled for testing");
+		// Re-enabled email sending with proper error handling
+		boolean emailOk = false;
+		try {
+			emailOk = emailService.sendContactEmail("info@careridesolutionspa.com", subject, text);
+			System.out.println("Email send result for contact ID=" + saved.getId() + ": " + emailOk);
+		} catch (Exception e) {
+			System.err.println("Email send failed for contact ID=" + saved.getId() + ": " + e.getMessage());
+			emailOk = false;
+		}
 		
 		if (!emailOk) {
 			System.err.println("Warning: email send failed for contact id=" + saved.getId());

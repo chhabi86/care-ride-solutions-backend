@@ -80,6 +80,11 @@ public class EmailService {
             props.put("mail.smtp.ssl.enable", String.valueOf(a.ssl));
             props.put("mail.smtp.starttls.enable", String.valueOf(a.startTls));
             props.put("mail.debug", "false");
+            
+            // Add timeout settings to prevent hanging
+            props.put("mail.smtp.connectiontimeout", "10000"); // 10 seconds
+            props.put("mail.smtp.timeout", "10000"); // 10 seconds
+            props.put("mail.smtp.writetimeout", "10000"); // 10 seconds
 
             log.info("Trying mail send using host={}, port={}, ssl={}, starttls={}", a.host, a.port, a.ssl, a.startTls);
             try {
