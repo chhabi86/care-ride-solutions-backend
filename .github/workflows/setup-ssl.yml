@@ -1,0 +1,24 @@
+name: Setup SSL Certificate
+
+on:
+  workflow_dispatch:  # Manual trigger only
+
+jobs:
+  setup-ssl:
+    runs-on: ubuntu-latest
+    
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+    
+    - name: Setup SSL Certificate
+      uses: appleboy/ssh-action@v1.0.3
+      with:
+        host: ${{ secrets.HOST }}
+        username: ${{ secrets.USERNAME }}
+        key: ${{ secrets.SSH_KEY }}
+        script: |
+          # Download and run SSL setup script
+          curl -fsSL https://raw.githubusercontent.com/chhabi86/care-ride-solutions-backend/main/deploy/scripts/setup-ssl.sh -o /tmp/setup-ssl.sh
+          chmod +x /tmp/setup-ssl.sh
+          /tmp/setup-ssl.sh
