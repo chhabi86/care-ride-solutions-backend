@@ -63,9 +63,12 @@ jobs:
         run: |
           D=${DOMAIN:-careridesolutionsspa.com}
           for i in {1..15}; do
-            STATUS=$(curl -fsS -o /dev/null -w '%{http_code}' https://$D/api/actuator/health || true)
-            if [ "$STATUS" = "200" ]; then
-              echo "Healthy (200)"; exit 0; fi; echo "Attempt $i: status=$STATUS"; sleep 4;
+            STATUS=$(curl -fsS -o /dev/null -w '%{http_code}' https://$D/actuator/health || true)
+            if [ "$STATUS" != "200" ]; then
+              STATUS=$(curl -fsS -o /dev/null -w '%{http_code}' https://$D/api/actuator/health || true)
+            fi
+            if [ "$STATUS" = "200" ]; then echo "Healthy (200)"; exit 0; fi
+            echo "Attempt $i: status=$STATUS"; sleep 4;
           done; echo "Healthcheck failed"; exit 1
 
       - name: Summary
