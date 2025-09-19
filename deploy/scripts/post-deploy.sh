@@ -79,10 +79,6 @@ Environment="MAIL_PORT=${MAIL_PORT:-465}"
 Environment="MAIL_USERNAME=${MAIL_USERNAME:-}"
 Environment="MAIL_PASSWORD=${MAIL_PASSWORD:-}"
 Environment="MAIL_FROM=${MAIL_FROM:-noreply@careridesolutionspa.com}"
-Environment="MAIL_STARTTLS=${MAIL_STARTTLS:-false}"
-Environment="MAIL_SSL_ENABLE=${MAIL_SSL_ENABLE:-true}"
-Environment="MAIL_SSL_SOCKET_FACTORY_CLASS=${MAIL_SSL_SOCKET_FACTORY_CLASS:-javax.net.ssl.SSLSocketFactory}"
-Environment="MAIL_SSL_SOCKET_FACTORY_PORT=${MAIL_SSL_SOCKET_FACTORY_PORT:-465}"
 Environment="MAIL_DEBUG=${MAIL_DEBUG:-false}"
 EOF
     

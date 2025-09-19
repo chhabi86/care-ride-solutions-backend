@@ -28,10 +28,7 @@ spring:
           auth: true
           from: ${MAIL_USERNAME:info@careridesolutionspa.com}
           ssl:
-            enable: ${MAIL_SSL_ENABLE:true}
-          socketFactory:
-            class: ${MAIL_SSL_SOCKET_FACTORY_CLASS:javax.net.ssl.SSLSocketFactory}
-            port: ${MAIL_SSL_SOCKET_FACTORY_PORT:465}
+            enable: true
         debug: ${MAIL_DEBUG:false}
 jwt:
   secret: ${JWT_SECRET:CHANGE_ME}
