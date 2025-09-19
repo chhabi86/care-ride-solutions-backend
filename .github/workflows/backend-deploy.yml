@@ -31,6 +31,8 @@ jobs:
     environment: production
     permissions:
       contents: read
+    env:
+      DOMAIN: ${{ secrets.DOMAIN }}
 
     steps:
       - name: Checkout
@@ -59,8 +61,9 @@ jobs:
       - name: Post-Deploy Healthcheck
         if: inputs.run_healthcheck == true
         run: |
+          D=${DOMAIN:-careridesolutionsspa.com}
           for i in {1..15}; do
-            STATUS=$(curl -fsS -o /dev/null -w '%{http_code}' https://${{ secrets.DOMAIN }}/api/actuator/health || true)
+            STATUS=$(curl -fsS -o /dev/null -w '%{http_code}' https://$D/api/actuator/health || true)
             if [ "$STATUS" = "200" ]; then
               echo "Healthy (200)"; exit 0; fi; echo "Attempt $i: status=$STATUS"; sleep 4;
           done; echo "Healthcheck failed"; exit 1
