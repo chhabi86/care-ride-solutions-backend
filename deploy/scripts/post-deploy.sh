@@ -75,12 +75,13 @@ else
     sudo tee "$SYSTEMD_ENV_FILE" > /dev/null <<EOF
 [Service]
 Environment="MAIL_HOST=${MAIL_HOST:-smtp.mail.us-east-1.awsapps.com}"
-Environment="MAIL_PORT=${MAIL_PORT:-587}"
+Environment="MAIL_PORT=${MAIL_PORT:-465}"
 Environment="MAIL_USERNAME=${MAIL_USERNAME:-}"
 Environment="MAIL_PASSWORD=${MAIL_PASSWORD:-}"
 Environment="MAIL_FROM=${MAIL_FROM:-noreply@careridesolutionspa.com}"
-Environment="MAIL_STARTTLS=${MAIL_STARTTLS:-true}"
-Environment="MAIL_AUTH=${MAIL_AUTH:-true}"
+Environment="MAIL_STARTTLS=${MAIL_STARTTLS:-false}"
+Environment="MAIL_SSL_ENABLE=${MAIL_SSL_ENABLE:-true}"
+Environment="MAIL_DEBUG=${MAIL_DEBUG:-false}"
 EOF
     
     echo "5. Restarting backend service to apply new environment..."
