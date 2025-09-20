@@ -16,7 +16,7 @@ spring:
   flyway:
     enabled: false
   mail:
-    # AWS WorkMail SMTP configuration
+    # AWS WorkMail SMTP configuration - Updated to trigger deployment
     host: ${MAIL_HOST:smtp.mail.us-east-1.awsapps.com}
     port: ${MAIL_PORT:465}
     username: ${MAIL_USERNAME:info@careridesolutionspa.com}
