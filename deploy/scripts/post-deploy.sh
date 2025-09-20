@@ -64,13 +64,6 @@ echo "3. Reloading nginx..."
 sudo systemctl reload nginx
 
 echo "4. Setting up environment variables for backend..."
-# Debug: Show what environment variables are being passed
-echo "DEBUG: Current environment variables:"
-echo "MAIL_HOST: ${MAIL_HOST:-'(not set)'}"
-echo "MAIL_PORT: ${MAIL_PORT:-'(not set)'}"
-echo "MAIL_USERNAME: ${MAIL_USERNAME:-'(not set)'}"
-echo "MAIL_PASSWORD length: ${#MAIL_PASSWORD}"
-
 # Create systemd override directory if it doesn't exist
 sudo mkdir -p "$SYSTEMD_ENV_DIR"
 

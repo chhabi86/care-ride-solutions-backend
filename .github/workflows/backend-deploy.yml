@@ -60,15 +60,6 @@ jobs:
 
       - name: Deploy Nginx Config & Environment
         run: |
-          # Debug GitHub secrets before deployment
-          MAIL_USERNAME="${{ secrets.MAIL_USERNAME }}"
-          MAIL_PASSWORD="${{ secrets.MAIL_PASSWORD }}"
-          echo "DEBUG: MAIL_USERNAME length: ${#MAIL_USERNAME}"
-          echo "DEBUG: MAIL_PASSWORD length: ${#MAIL_PASSWORD}"
-          echo "DEBUG: MAIL_USERNAME value: ${MAIL_USERNAME}"
-          echo "DEBUG: MAIL_PASSWORD first 3 chars: ${MAIL_PASSWORD:0:3}"
-          echo "DEBUG: MAIL_PASSWORD last 3 chars: ${MAIL_PASSWORD: -3}"
-          
           # Run post-deploy script to configure nginx and environment
           ssh ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} "set -euo pipefail; cd /opt/backend/repo; export MAIL_HOST='${{ secrets.MAIL_HOST || 'smtp.mail.us-east-1.awsapps.com' }}'; export MAIL_PORT='${{ secrets.MAIL_PORT || '465' }}'; export MAIL_USERNAME='${{ secrets.MAIL_USERNAME }}'; export MAIL_PASSWORD='${{ secrets.MAIL_PASSWORD }}'; export MAIL_FROM='${{ secrets.MAIL_FROM || 'noreply@careridesolutionspa.com' }}'; export MAIL_DEBUG='${{ secrets.MAIL_DEBUG || 'false' }}'; ./deploy/scripts/post-deploy.sh"
 
