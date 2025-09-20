@@ -29,6 +29,12 @@ spring:
           from: ${MAIL_USERNAME:info@careridesolutionspa.com}
           ssl:
             enable: true
+          socketFactory:
+            class: javax.net.ssl.SSLSocketFactory
+            port: ${MAIL_PORT:465}
+          connectiontimeout: 10000
+          timeout: 10000
+          writetimeout: 10000
         debug: ${MAIL_DEBUG:false}
 jwt:
   secret: ${JWT_SECRET:CHANGE_ME}

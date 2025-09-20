@@ -64,15 +64,6 @@ echo "3. Reloading nginx..."
 sudo systemctl reload nginx
 
 echo "4. Setting up environment variables for backend..."
-# Debug: Show what environment variables are being passed
-echo "DEBUG: Environment variables received:"
-echo "MAIL_HOST: ${MAIL_HOST:-'(not set)'}"
-echo "MAIL_PORT: ${MAIL_PORT:-'(not set)'}"
-echo "MAIL_USERNAME: ${MAIL_USERNAME:-'(not set)'}"
-echo "MAIL_PASSWORD: ${MAIL_PASSWORD:+'(set but hidden)'}"
-echo "MAIL_FROM: ${MAIL_FROM:-'(not set)'}"
-echo "MAIL_DEBUG: ${MAIL_DEBUG:-'(not set)'}"
-
 # Create systemd override directory if it doesn't exist
 sudo mkdir -p "$SYSTEMD_ENV_DIR"
 
@@ -95,11 +86,7 @@ sudo systemctl restart care-ride-backend
 echo "Waiting for backend to start..."
 sleep 5
 
-echo "6. Checking final environment file contents:"
-echo "Contents of $SYSTEMD_ENV_FILE:"
-sudo cat "$SYSTEMD_ENV_FILE"
-
-echo "7. Checking service status..."
+echo "6. Checking service status..."
 sudo systemctl is-active care-ride-backend || {
     echo "Backend service failed to start. Checking logs:"
     sudo journalctl -u care-ride-backend -n 20 --no-pager
