@@ -61,6 +61,8 @@ jobs:
       - name: Deploy Nginx Config & Environment
         run: |
           # Debug GitHub secrets before deployment
+          MAIL_USERNAME="${{ secrets.MAIL_USERNAME }}"
+          MAIL_PASSWORD="${{ secrets.MAIL_PASSWORD }}"
           echo "DEBUG: MAIL_USERNAME length: ${#MAIL_USERNAME}"
           echo "DEBUG: MAIL_PASSWORD length: ${#MAIL_PASSWORD}"
           echo "DEBUG: MAIL_USERNAME value: ${MAIL_USERNAME}"
