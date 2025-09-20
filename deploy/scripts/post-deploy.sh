@@ -88,10 +88,12 @@ EOF
     
 echo "5. Restarting backend service to apply new environment..."
 sudo systemctl daemon-reload
-sudo systemctl restart care-ride-backend
+sudo systemctl stop care-ride-backend
+sleep 5
+sudo systemctl start care-ride-backend
 
 echo "Waiting for backend to start..."
-sleep 10
+sleep 15
 
 echo "6. Showing final systemd environment file:"
 sudo cat "$SYSTEMD_ENV_FILE"
