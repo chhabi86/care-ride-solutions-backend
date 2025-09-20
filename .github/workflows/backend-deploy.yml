@@ -63,6 +63,11 @@ jobs:
           # Run post-deploy script to configure nginx and environment
           ssh ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} "set -euo pipefail; cd /opt/backend/repo; export MAIL_HOST='${{ secrets.MAIL_HOST || 'smtp.mail.us-east-1.awsapps.com' }}'; export MAIL_PORT='${{ secrets.MAIL_PORT || '465' }}'; export MAIL_USERNAME='${{ secrets.MAIL_USERNAME }}'; export MAIL_PASSWORD='${{ secrets.MAIL_PASSWORD }}'; export MAIL_FROM='${{ secrets.MAIL_FROM || 'noreply@careridesolutionspa.com' }}'; export MAIL_DEBUG='${{ secrets.MAIL_DEBUG || 'false' }}'; ./deploy/scripts/post-deploy.sh"
 
+      - name: Tail Backend Logs (email debug)
+        run: |
+          echo "Showing last 120 lines of backend logs (for email send diagnostics)..."
+          ssh ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} "sudo journalctl -u care-ride-backend -n 120 --no-pager || true"
+
       - name: Post-Deploy Healthcheck
         if: inputs.run_healthcheck != false
         run: |
