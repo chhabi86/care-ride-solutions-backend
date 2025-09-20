@@ -54,18 +54,34 @@ public class EmailService {
         message.setSubject(subject);
         message.setText(text);
 
-        // candidate transports to try: primary configured port/protocol first, then common alternates
-        class Attempt { String host; int port; boolean ssl; boolean startTls; }
+        // Build candidate transports. We prioritize STARTTLS (587) for Microsoft/Office365 style hosts.
+        class Attempt { String host; int port; boolean ssl; boolean startTls; String label; }
+        java.util.LinkedHashMap<String, Attempt> attemptsMap = new java.util.LinkedHashMap<>();
 
-        java.util.List<Attempt> attempts = new java.util.ArrayList<>();
-        Attempt primary = new Attempt(); primary.host = configuredHost; primary.port = configuredPort;
-        // assume SSL on 465, otherwise try STARTTLS on 587 and plain on 25
-        primary.ssl = (configuredPort == 465);
-        primary.startTls = (configuredPort == 587);
-        attempts.add(primary);
+        java.util.function.Function<Attempt, Attempt> add = a -> { attemptsMap.put(a.host+":"+a.port+":"+a.ssl+":"+a.startTls, a); return a; };
 
-        Attempt alt1 = new Attempt(); alt1.host = configuredHost; alt1.port = 587; alt1.ssl = false; alt1.startTls = true; attempts.add(alt1);
-        Attempt alt2 = new Attempt(); alt2.host = configuredHost; alt2.port = 25; alt2.ssl = false; alt2.startTls = false; attempts.add(alt2);
+        boolean hostLooksMicrosoft = configuredHost.toLowerCase().contains("office") || configuredHost.toLowerCase().contains("outlook") || configuredHost.toLowerCase().contains("microsoft");
+
+        // Primary derived from configured values
+        Attempt cfg = new Attempt(); cfg.host = configuredHost; cfg.port = configuredPort; cfg.ssl = (configuredPort == 465); cfg.startTls = (configuredPort == 587); cfg.label = "configured"; add.apply(cfg);
+
+        // If using Microsoft & not already 587, put 587 STARTTLS first
+        if (hostLooksMicrosoft && configuredPort != 587) {
+            Attempt ms = new Attempt(); ms.host = configuredHost; ms.port = 587; ms.ssl = false; ms.startTls = true; ms.label = "ms-starttls"; add.apply(ms);
+        }
+
+        // Add SSL 465 fallback (unless that's already configured)
+        if (configuredPort != 465) {
+            Attempt ssl465 = new Attempt(); ssl465.host = configuredHost; ssl465.port = 465; ssl465.ssl = true; ssl465.startTls = false; ssl465.label = "ssl465"; add.apply(ssl465);
+        }
+        // STARTTLS 587 (generic) if not already present
+        if (!attemptsMap.values().stream().anyMatch(a -> a.port == 587 && a.startTls)) {
+            Attempt stls = new Attempt(); stls.host = configuredHost; stls.port = 587; stls.ssl = false; stls.startTls = true; stls.label = "starttls587"; add.apply(stls);
+        }
+        // Plain 25 fallback
+        Attempt plain25 = new Attempt(); plain25.host = configuredHost; plain25.port = 25; plain25.ssl = false; plain25.startTls = false; plain25.label = "plain25"; add.apply(plain25);
+
+        java.util.List<Attempt> attempts = new java.util.ArrayList<>(attemptsMap.values());
 
         for (Attempt a : attempts) {
             JavaMailSenderImpl impl = new JavaMailSenderImpl();
@@ -80,6 +96,9 @@ public class EmailService {
             props.put("mail.smtp.from", configuredSender);
             props.put("mail.smtp.ssl.enable", String.valueOf(a.ssl));
             props.put("mail.smtp.starttls.enable", String.valueOf(a.startTls));
+            if (a.startTls) {
+                props.put("mail.smtp.starttls.required", "true");
+            }
             props.put("mail.debug", "false");
             
             // Add timeout settings to prevent hanging
@@ -87,7 +106,7 @@ public class EmailService {
             props.put("mail.smtp.timeout", "10000"); // 10 seconds
             props.put("mail.smtp.writetimeout", "10000"); // 10 seconds
 
-            log.info("Trying mail send using host={}, port={}, ssl={}, starttls={}", a.host, a.port, a.ssl, a.startTls);
+            log.info("Trying mail send using host={}, port={}, ssl={}, starttls={}, label={}", a.host, a.port, a.ssl, a.startTls, a.label);
             try {
                 impl.send(message);
                 log.info("✅ SUCCESS: Email sent to {} (subject={}) via {}:{}", to, subject, a.host, a.port);

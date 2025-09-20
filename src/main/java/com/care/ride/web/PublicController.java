@@ -9,6 +9,7 @@ import com.care.ride.service.EmailService;
 import com.care.ride.repo.*;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.*;
 
 import java.net.URI;
@@ -29,6 +30,8 @@ public class PublicController {
 	private final BookingRepo bRepo;
 	private final EmailService emailService;
 	private final ContactRepo contactRepo;
+	@Value("${MAIL_NOTIFY:${MAIL_FROM:info@careridesolutionspa.com}}")
+	private String notifyRecipient;
 
 	public PublicController(ServiceTypeRepo sRepo, BookingRepo bRepo, EmailService emailService, ContactRepo contactRepo){
 		this.sRepo = sRepo;
@@ -38,6 +41,7 @@ public class PublicController {
 	}
 	@PostMapping("/contact")
 	public ResponseEntity<?> contact(@RequestBody @Valid ContactRequest req) {
+		System.out.println("Received contact submission from=" + req.getEmail() + " reason=" + req.getReason()+" notifyRecipient="+notifyRecipient);
 		// Persist contact to DB
 		Contact c = new Contact();
 		c.setName(req.getName());
@@ -59,7 +63,7 @@ public class PublicController {
 		System.out.println("Contact saved with ID=" + saved.getId() + ", starting async email send");
 		java.util.concurrent.CompletableFuture.runAsync(() -> {
 			try {
-				boolean emailOk = emailService.sendContactEmail("info@careridesolutionspa.com", subject, text);
+				boolean emailOk = emailService.sendContactEmail(notifyRecipient, subject, text);
 				System.out.println("Async email send result for contact ID=" + saved.getId() + ": " + emailOk);
 			} catch (Exception e) {
 				System.err.println("Async email send failed for contact ID=" + saved.getId() + ": " + e.getMessage());
@@ -106,7 +110,7 @@ public class PublicController {
 		text.append("Service Type ID: ").append(req.serviceTypeId()).append("\n");
 		if (req.notes() != null && !req.notes().isEmpty()) text.append("Notes: ").append(req.notes()).append("\n");
 
-		boolean emailOk = emailService.sendContactEmail("info@careridesolutionspa.com", subject, text.toString());
+		boolean emailOk = emailService.sendContactEmail(notifyRecipient, subject, text.toString());
 		if (!emailOk) {
 			System.err.println("Warning: email send failed for booking id=" + saved.getId());
 		}

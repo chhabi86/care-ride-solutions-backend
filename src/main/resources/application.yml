@@ -13,7 +13,7 @@ spring:
       ddl-auto: update
     properties:
       hibernate:
-        show_sql: false
+  show_sql: false
   flyway:
     enabled: false
   mail:
@@ -27,7 +27,7 @@ spring:
       mail:
         smtp:
           auth: true
-          from: ${MAIL_USERNAME:info@careridesolutionspa.com}
+          from: ${MAIL_FROM:${MAIL_USERNAME:info@careridesolutionspa.com}}
           ssl:
             enable: true
           socketFactory:
@@ -37,6 +37,7 @@ spring:
           timeout: 10000
           writetimeout: 10000
         debug: ${MAIL_DEBUG:false}
+# Custom notification recipient (MAIL_NOTIFY) is consumed directly via @Value in PublicController.
 jwt:
   secret: ${JWT_SECRET:CHANGE_ME}
 
