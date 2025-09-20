@@ -41,37 +41,60 @@ public class PublicController {
 	}
 	@PostMapping("/contact")
 	public ResponseEntity<?> contact(@RequestBody @Valid ContactRequest req) {
-		System.out.println("Received contact submission from=" + req.getEmail() + " reason=" + req.getReason()+" notifyRecipient="+notifyRecipient);
-		// Persist contact to DB
-		Contact c = new Contact();
-		c.setName(req.getName());
-		c.setEmail(req.getEmail());
-		c.setPhone(req.getPhone());
-		c.setReason(req.getReason());
-		c.setMessage(req.getMessage());
-		var saved = contactRepo.save(c);
+		long start = System.currentTimeMillis();
+		try {
+			System.out.println("[contact] inbound payload email="+req.getEmail()+" reason="+req.getReason()+" notifyRecipient="+notifyRecipient);
+			int approxSize = (req.getMessage() != null ? req.getMessage().length() : 0) +
+					(req.getName() != null ? req.getName().length() : 0);
+			// Persist contact to DB
+			Contact c = new Contact();
+			c.setName(req.getName());
+			c.setEmail(req.getEmail());
+			c.setPhone(req.getPhone());
+			c.setReason(req.getReason());
+			c.setMessage(req.getMessage());
+			var saved = contactRepo.save(c);
+			System.out.println("[contact] saved id="+saved.getId()+" size="+approxSize);
 
-		// Compose email body
-		String subject = "New Contact Form Submission: " + req.getReason();
-		String text = "Name: " + req.getName() + "\n"
-				+ "Email: " + req.getEmail() + "\n"
-				+ "Phone: " + req.getPhone() + "\n"
-				+ "Reason: " + req.getReason() + "\n"
-				+ "Message: " + req.getMessage();
-		
-		// Send email asynchronously (non-blocking) - respond immediately to user
-		System.out.println("Contact saved with ID=" + saved.getId() + ", starting async email send");
-		java.util.concurrent.CompletableFuture.runAsync(() -> {
-			try {
-				boolean emailOk = emailService.sendContactEmail(notifyRecipient, subject, text);
-				System.out.println("Async email send result for contact ID=" + saved.getId() + ": " + emailOk);
-			} catch (Exception e) {
-				System.err.println("Async email send failed for contact ID=" + saved.getId() + ": " + e.getMessage());
-			}
-		});
-		
-		// Return immediately - don't wait for email
-		return ResponseEntity.ok(java.util.Map.of("status","sent","id",saved.getId(), "emailStatus", true));
+			// Compose email body
+			String subject = "New Contact Form Submission: " + req.getReason();
+			String text = "Name: " + req.getName() + "\n"
+					+ "Email: " + req.getEmail() + "\n"
+					+ "Phone: " + req.getPhone() + "\n"
+					+ "Reason: " + req.getReason() + "\n"
+					+ "Message: " + req.getMessage();
+
+			// Send email asynchronously
+			java.util.concurrent.CompletableFuture.runAsync(() -> {
+				try {
+					boolean emailOk = emailService.sendContactEmail(notifyRecipient, subject, text);
+					System.out.println("[contact] async email result id="+saved.getId()+" ok="+emailOk);
+				} catch (Exception e) {
+					System.err.println("[contact] async email failure id="+saved.getId()+" msg="+e.getMessage());
+				}
+			});
+
+			long dur = System.currentTimeMillis() - start;
+			return ResponseEntity.ok(java.util.Map.of(
+					"status","sent",
+					"id", saved.getId(),
+					"emailStatus", true,
+					"durationMs", dur));
+		} catch (Exception ex) {
+			long dur = System.currentTimeMillis() - start;
+			System.err.println("[contact] ERROR durationMs="+dur+" type="+ex.getClass().getSimpleName()+" msg="+ex.getMessage());
+			ex.printStackTrace();
+			return ResponseEntity.status(500).body(java.util.Map.of(
+					"error","CONTACT_SAVE_FAILED",
+					"type", ex.getClass().getSimpleName(),
+					"message", ex.getMessage(),
+					"durationMs", dur));
+		}
+	}
+
+	@GetMapping("/ping")
+	public java.util.Map<String,Object> ping() {
+		return java.util.Map.of("status","ok","ts",System.currentTimeMillis());
 	}
 
 	@GetMapping("/services")
