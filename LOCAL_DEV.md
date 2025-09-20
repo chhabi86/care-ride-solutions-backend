@@ -63,7 +63,7 @@ The default `application-local.yml` no longer contains real SMTP credentials. To
 ```bash
 export MAIL_HOST=smtp.mail.us-east-1.awsapps.com
 export MAIL_PORT=465
-export MAIL_USERNAME=info@careridesolutionsspa.com
+export MAIL_USERNAME=info@careridesolutionspa.com
 export MAIL_PASSWORD=your_smtp_password_here
 export MAIL_DEBUG=true
 mvn spring-boot:run -Dspring-boot.run.profiles=local
@@ -73,7 +73,7 @@ mvn spring-boot:run -Dspring-boot.run.profiles=local
 ```yaml
 spring:
     mail:
-        username: info@careridesolutionsspa.com
+        username: info@careridesolutionspa.com
         password: your_smtp_password_here
 ```
 Spring will merge it automatically if you keep the `local` profile active.
