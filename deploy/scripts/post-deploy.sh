@@ -95,7 +95,30 @@ echo "7. Showing effective process environment (filtered MAIL_*):"
 PGREP_PID=$(pgrep -f 'care-ride-backend' | head -1 || true)
 if [ -n "$PGREP_PID" ]; then
     echo "Process PID: $PGREP_PID"
-    sudo strings /proc/$PGREP_PID/environ | tr '\0' '\n' | grep '^MAIL_' || echo "No MAIL_* vars in process environ dump"
+    PROC_ENV=$(sudo strings /proc/$PGREP_PID/environ | tr '\0' '\n' | grep '^MAIL_' || true)
+    if [ -n "$PROC_ENV" ]; then
+        echo "$PROC_ENV"
+        MAIL_USER_RUNTIME=$(echo "$PROC_ENV" | grep '^MAIL_USERNAME=' | sed 's/MAIL_USERNAME=//')
+        MAIL_PASS_RUNTIME=$(echo "$PROC_ENV" | grep '^MAIL_PASSWORD=' | sed 's/MAIL_PASSWORD=//')
+        USER_LEN=${#MAIL_USER_RUNTIME}
+        PASS_LEN=${#MAIL_PASS_RUNTIME}
+        if [ -n "$MAIL_PASS_RUNTIME" ]; then
+            MASKED_PASS=$(echo "$MAIL_PASS_RUNTIME" | sed -E 's/(.).*(.)/\1***\2/' )
+        else
+            MASKED_PASS='(empty)'
+        fi
+        echo "Derived lengths -> MAIL_USERNAME length=$USER_LEN, MAIL_PASSWORD length=$PASS_LEN"
+        EXPECTED_PASS_LEN=${#MAIL_PASSWORD}
+        if [ -n "$MAIL_PASSWORD" ]; then
+          echo "Deployed secret password length (from deploy env)=$EXPECTED_PASS_LEN"
+          if [ "$EXPECTED_PASS_LEN" -ne "$PASS_LEN" ]; then
+            echo "WARNING: Runtime password length ($PASS_LEN) differs from provided secret length ($EXPECTED_PASS_LEN). Environment not updated?" >&2
+          fi
+        fi
+        echo "Masked runtime password: $MASKED_PASS"
+    else
+        echo "No MAIL_* vars in process environ dump"
+    fi
 else
     echo "Backend process PID not found"
 fi

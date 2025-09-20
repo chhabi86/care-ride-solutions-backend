@@ -105,3 +105,11 @@ jobs:
         run: |
           echo "### Backend Deploy" >> $GITHUB_STEP_SUMMARY
           echo "Ref: ${{ inputs.ref }}" >> $GITHUB_STEP_SUMMARY
+          echo "Attempting runtime password length verification..." >> $GITHUB_STEP_SUMMARY
+          RUNTIME_JSON=$(curl -fsS http://${DOMAIN:-careridesolutionspa.com}/api/debug/mail 2>/dev/null || echo '{}')
+          RUNTIME_LEN=$(printf '%s' "$RUNTIME_JSON" | sed -n 's/.*"passwordLength"[[:space:]]*:[[:space:]]*\([0-9]\+\).*/\1/p')
+          if [ -n "$RUNTIME_LEN" ]; then
+            echo "Runtime password length: $RUNTIME_LEN" >> $GITHUB_STEP_SUMMARY
+          else
+            echo "Runtime password length: (unavailable)" >> $GITHUB_STEP_SUMMARY
+          fi
