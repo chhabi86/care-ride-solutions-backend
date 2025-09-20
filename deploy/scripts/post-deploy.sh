@@ -95,7 +95,13 @@ echo "7. Showing effective process environment (filtered MAIL_*):"
 PGREP_PID=$(pgrep -f 'care-ride-backend' | head -1 || true)
 if [ -n "$PGREP_PID" ]; then
     echo "Process PID: $PGREP_PID"
-    PROC_ENV=$(sudo strings /proc/$PGREP_PID/environ | tr '\0' '\n' | grep '^MAIL_' || true)
+    # Use hexdump fallback instead of strings (may not be installed)
+    if command -v strings >/dev/null 2>&1; then
+        RAW_ENV=$(sudo strings /proc/$PGREP_PID/environ 2>/dev/null)
+    else
+        RAW_ENV=$(sudo cat /proc/$PGREP_PID/environ 2>/dev/null | tr '\0' '\n')
+    fi
+    PROC_ENV=$(echo "$RAW_ENV" | grep '^MAIL_' || true)
     if [ -n "$PROC_ENV" ]; then
         echo "$PROC_ENV"
         MAIL_USER_RUNTIME=$(echo "$PROC_ENV" | grep '^MAIL_USERNAME=' | sed 's/MAIL_USERNAME=//')
@@ -131,22 +137,34 @@ sudo systemctl is-active care-ride-backend || {
 }
 
 echo "9. Testing endpoints..."
-# Test health endpoint
-curl -f http://localhost/api/actuator/health > /dev/null && echo "✓ Health endpoint OK" || echo "✗ Health endpoint failed"
+# Retry health up to 10 times
+HEALTH_OK=0
+for i in {1..10}; do
+    if curl -fsS http://localhost/api/actuator/health >/dev/null 2>&1; then
+        echo "✓ Health endpoint OK (attempt $i)"
+        HEALTH_OK=1; break
+    else
+        echo "Health attempt $i failed; waiting..."; sleep 3
+    fi
+done
+if [ $HEALTH_OK -ne 1 ]; then
+    echo "✗ Health endpoint failed after retries";
+    sudo journalctl -u care-ride-backend -n 40 --no-pager | sed 's/^/[journal]/';
+fi
 
-# Test contact endpoint with a simple POST
-CONTACT_TEST=$(curl -s -w "%{http_code}" -X POST http://localhost/api/contact \
-    -H "Content-Type: application/json" \
-    -d '{"name":"Test","phone":"123","email":"test@test.com","reason":"Test","message":"Test"}' \
-    -o /dev/null)
-
-if [[ "$CONTACT_TEST" == "200" ]]; then
-    echo "✓ Contact endpoint OK (200)"
-elif [[ "$CONTACT_TEST" == "404" ]]; then
-    echo "✗ Contact endpoint still returning 404 - nginx config may not have taken effect"
-    exit 1
-else
-    echo "✓ Contact endpoint responding ($CONTACT_TEST) - may need email config"
+# Test contact endpoint with a simple POST (only if health succeeded)
+if [ $HEALTH_OK -eq 1 ]; then
+    CONTACT_TEST=$(curl -s -w "%{http_code}" -X POST http://localhost/api/contact \
+            -H "Content-Type: application/json" \
+            -d '{"name":"Test","phone":"123","email":"test@test.com","reason":"Test","message":"Test"}' \
+            -o /dev/null)
+    if [[ "$CONTACT_TEST" == "200" ]]; then
+            echo "✓ Contact endpoint OK (200)"
+    elif [[ "$CONTACT_TEST" == "404" ]]; then
+            echo "✗ Contact endpoint still returning 404 - nginx config may not have taken effect"; exit 1
+    else
+            echo "Contact endpoint status: $CONTACT_TEST"
+    fi
 fi
 
 echo "=== Post-deployment configuration complete ==="
