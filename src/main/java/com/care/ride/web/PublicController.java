@@ -30,7 +30,7 @@ public class PublicController {
 	private final BookingRepo bRepo;
 	private final EmailService emailService;
 	private final ContactRepo contactRepo;
-	@Value("${MAIL_NOTIFY:${MAIL_FROM:info@careridesolutionspa.com}}")
+	@Value("${mail.notify:${MAIL_NOTIFY:${MAIL_FROM:${MAIL_USERNAME:info@careridesolutionspa.com}}}}")
 	private String notifyRecipient;
 
 	public PublicController(ServiceTypeRepo sRepo, BookingRepo bRepo, EmailService emailService, ContactRepo contactRepo){

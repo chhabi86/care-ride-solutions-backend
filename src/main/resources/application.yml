@@ -1,6 +1,8 @@
 
 server:
   port: 8080
+# Optional external secrets file (not committed) can be added as application-secrets.yml
+# spring.config.import: optional:classpath:application-secrets.yml
 # Deploy with corrected MAIL_USERNAME GitHub secret
 spring:
   datasource:

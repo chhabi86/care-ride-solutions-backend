@@ -1,2 +1,3 @@
 # Ignore local mail override file holding secrets
 src/main/resources/application-local-mail.yml
+src/main/resources/application-secrets.yml
