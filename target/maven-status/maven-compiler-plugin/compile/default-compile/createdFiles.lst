@@ -1,7 +1,9 @@
 com/care/ride/ServletInitializer.class
 com/care/ride/repo/BookingRepo.class
+com/care/ride/service/EmailService$Attempt.class
 com/care/ride/config/MailConfig.class
-com/care/ride/service/EmailService$1Attempt.class
+com/care/ride/controller/DebugController.class
+com/care/ride/web/DebugMailController.class
 com/care/ride/domain/ServiceType.class
 com/care/ride/config/SecurityConfig.class
 com/care/ride/dto/BookingRequest.class

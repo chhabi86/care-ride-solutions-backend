@@ -141,4 +141,18 @@ public class PublicController {
 		// include emailStatus so UI can show helpful message
 		return ResponseEntity.created(URI.create("/api/bookings/"+saved.getId())).body(java.util.Map.of("booking", saved, "emailStatus", emailOk));
 	}
+
+	@GetMapping("/debug/smtp")
+	public ResponseEntity<?> debugSmtp() {
+		try {
+			java.util.Map<String, Object> result = emailService.testSmtpConnection();
+			return ResponseEntity.ok(result);
+		} catch (Exception e) {
+			return ResponseEntity.status(500).body(java.util.Map.of(
+					"error", "SMTP_DEBUG_FAILED",
+					"message", e.getMessage(),
+					"type", e.getClass().getSimpleName()
+			));
+		}
+	}
 }

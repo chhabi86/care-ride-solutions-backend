@@ -11,6 +11,15 @@ import org.springframework.stereotype.Service;
 public class EmailService {
     private static final Logger log = LoggerFactory.getLogger(EmailService.class);
 
+    // Inner class for SMTP attempt configuration
+    private static class Attempt { 
+        String host; 
+        int port; 
+        boolean ssl; 
+        boolean startTls; 
+        String label; 
+    }
+
     @org.springframework.beans.factory.annotation.Value("${spring.mail.username:info@careridesolutionspa.com}")
     private String configuredSender;
 
@@ -55,7 +64,6 @@ public class EmailService {
         message.setText(text);
 
         // Build candidate transports. We prioritize STARTTLS (587) for Microsoft/Office365 style hosts.
-        class Attempt { String host; int port; boolean ssl; boolean startTls; String label; }
         java.util.LinkedHashMap<String, Attempt> attemptsMap = new java.util.LinkedHashMap<>();
 
         java.util.function.Function<Attempt, Attempt> add = a -> { attemptsMap.put(a.host+":"+a.port+":"+a.ssl+":"+a.startTls, a); return a; };
@@ -127,5 +135,110 @@ public class EmailService {
         log.error("   3. Domain {} not verified in AWS WorkMail", configuredSender.split("@")[1]);
         log.error("   4. Sending limits exceeded");
         return false;
+    }
+
+    /**
+     * Test SMTP connection without sending emails
+     */
+    public java.util.Map<String, Object> testSmtpConnection() {
+        java.util.Map<String, Object> result = new java.util.HashMap<>();
+        result.put("host", configuredHost);
+        result.put("port", configuredPort);
+        result.put("username", configuredSender);
+        result.put("passwordConfigured", configuredPassword != null && !configuredPassword.trim().isEmpty());
+        result.put("passwordLength", configuredPassword != null ? configuredPassword.length() : 0);
+        
+        java.util.List<java.util.Map<String, Object>> attempts = new java.util.ArrayList<>();
+        
+        // Test different transport configurations similar to sendContactEmail
+        Attempt[] configs = {
+            createAttempt(configuredHost, 587, false, true, "office365-starttls"),
+            createAttempt(configuredHost, 465, true, false, "office365-ssl"),
+            createAttempt(configuredHost, 25, false, false, "office365-plain")
+        };
+        
+        for (Attempt attempt : configs) {
+            java.util.Map<String, Object> attemptResult = new java.util.HashMap<>();
+            attemptResult.put("host", attempt.host);
+            attemptResult.put("port", attempt.port);
+            attemptResult.put("ssl", attempt.ssl);
+            attemptResult.put("starttls", attempt.startTls);
+            attemptResult.put("label", attempt.label);
+            
+            try {
+                JavaMailSenderImpl impl = new JavaMailSenderImpl();
+                impl.setHost(attempt.host);
+                impl.setPort(attempt.port);
+                impl.setUsername(configuredSender);
+                impl.setPassword(configuredPassword);
+                impl.setProtocol(configuredProtocol);
+
+                java.util.Properties props = impl.getJavaMailProperties();
+                props.put("mail.smtp.auth", "true");
+                props.put("mail.smtp.from", configuredSender);
+                props.put("mail.smtp.ssl.enable", String.valueOf(attempt.ssl));
+                props.put("mail.smtp.starttls.enable", String.valueOf(attempt.startTls));
+                if (attempt.startTls) {
+                    props.put("mail.smtp.starttls.required", "true");
+                }
+                props.put("mail.debug", "false");
+                
+                // Add timeout settings
+                props.put("mail.smtp.connectiontimeout", "5000"); // 5 seconds for testing
+                props.put("mail.smtp.timeout", "5000");
+                props.put("mail.smtp.writetimeout", "5000");
+                
+                // Test connection
+                impl.testConnection();
+                attemptResult.put("status", "SUCCESS");
+                attemptResult.put("message", "Authentication and connection successful");
+                
+            } catch (org.springframework.mail.MailAuthenticationException ex) {
+                attemptResult.put("status", "AUTH_FAILED");
+                attemptResult.put("error", "MailAuthenticationException");
+                attemptResult.put("message", "Authentication failed: " + ex.getMessage());
+                attemptResult.put("suggestion", "Check username/password or enable app-specific passwords");
+            } catch (Exception ex) {
+                attemptResult.put("status", "CONNECTION_FAILED");
+                attemptResult.put("error", ex.getClass().getSimpleName());
+                attemptResult.put("message", ex.getMessage());
+            }
+            
+            attempts.add(attemptResult);
+        }
+        
+        result.put("attempts", attempts);
+        result.put("timestamp", java.time.Instant.now().toString());
+        result.put("microsoftOffice365Info", getMicrosoftSmtpInfo());
+        
+        return result;
+    }
+
+    private Attempt createAttempt(String host, int port, boolean ssl, boolean startTls, String label) {
+        Attempt a = new Attempt();
+        a.host = host;
+        a.port = port;
+        a.ssl = ssl;
+        a.startTls = startTls;
+        a.label = label;
+        return a;
+    }
+
+    private java.util.Map<String, Object> getMicrosoftSmtpInfo() {
+        java.util.Map<String, Object> info = new java.util.HashMap<>();
+        info.put("recommendedSettings", java.util.Map.of(
+            "host", "smtp.office365.com",
+            "port", 587,
+            "encryption", "STARTTLS",
+            "authentication", "OAuth2 or App Password"
+        ));
+        info.put("commonIssues", java.util.List.of(
+            "Basic authentication may be disabled - use app-specific passwords",
+            "Multi-factor authentication blocks regular passwords", 
+            "Security defaults in Microsoft 365 disable basic auth",
+            "SMTP AUTH may be disabled for the mailbox"
+        ));
+        info.put("howToCreateAppPassword", "https://support.microsoft.com/en-us/account-billing/create-app-passwords-for-apps-that-can-t-use-two-step-verification-5896ed9b-4263-e681-128a-a6f2979a7944");
+        return info;
     }
 }

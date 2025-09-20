@@ -1,4 +1,5 @@
 /Users/chhabisharma/Documents/Care-ride-solution/care-ride-solutions-backend/src/main/java/com/care/ride/config/DevDataLoader.java
+/Users/chhabisharma/Documents/Care-ride-solution/care-ride-solutions-backend/src/main/java/com/care/ride/web/DebugMailController.java
 /Users/chhabisharma/Documents/Care-ride-solution/care-ride-solutions-backend/src/main/java/com/care/ride/repo/BookingRepo.java
 /Users/chhabisharma/Documents/Care-ride-solution/care-ride-solutions-backend/src/main/java/com/care/ride/ServletInitializer.java
 /Users/chhabisharma/Documents/Care-ride-solution/care-ride-solutions-backend/src/main/java/com/care/ride/CareRideApplication.java
@@ -8,6 +9,7 @@
 /Users/chhabisharma/Documents/Care-ride-solution/care-ride-solutions-backend/src/main/java/com/care/ride/service/EmailService.java
 /Users/chhabisharma/Documents/Care-ride-solution/care-ride-solutions-backend/src/main/java/com/care/ride/domain/ServiceType.java
 /Users/chhabisharma/Documents/Care-ride-solution/care-ride-solutions-backend/src/main/java/com/care/ride/repo/ServiceTypeRepo.java
+/Users/chhabisharma/Documents/Care-ride-solution/care-ride-solutions-backend/src/main/java/com/care/ride/controller/DebugController.java
 /Users/chhabisharma/Documents/Care-ride-solution/care-ride-solutions-backend/src/main/java/com/care/ride/repo/ContactRepo.java
 /Users/chhabisharma/Documents/Care-ride-solution/care-ride-solutions-backend/src/main/java/com/care/ride/domain/Booking.java
 /Users/chhabisharma/Documents/Care-ride-solution/care-ride-solutions-backend/src/main/java/com/care/ride/domain/Contact.java
