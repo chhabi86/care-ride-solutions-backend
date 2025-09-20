@@ -64,6 +64,11 @@ echo "3. Reloading nginx..."
 sudo systemctl reload nginx
 
 echo "4. Setting up environment variables for backend..."
+# Temporary debug to verify password is being passed (REMOVE AFTER TESTING)
+echo "DEBUG: MAIL_PASSWORD length: ${#MAIL_PASSWORD}"
+echo "DEBUG: MAIL_PASSWORD first 3 chars: ${MAIL_PASSWORD:0:3}"
+echo "DEBUG: MAIL_PASSWORD last 3 chars: ${MAIL_PASSWORD: -3}"
+
 # Create systemd override directory if it doesn't exist
 sudo mkdir -p "$SYSTEMD_ENV_DIR"
 
