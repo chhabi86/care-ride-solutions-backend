@@ -37,6 +37,7 @@ public class EmailService {
         log.info("Subject: {}", subject);
         log.info("Host: {}, Port: {}", configuredHost, configuredPort);
         log.info("Password configured: {}", (configuredPassword != null && !configuredPassword.trim().isEmpty()) ? "YES" : "NO");
+        log.info("Password length: {}", configuredPassword != null ? configuredPassword.length() : 0);
         
         if (configuredPassword == null || configuredPassword.trim().isEmpty()) {
             log.error("❌ MAIL_PASSWORD is not configured! Email cannot be sent.");
@@ -89,17 +90,23 @@ public class EmailService {
             log.info("Trying mail send using host={}, port={}, ssl={}, starttls={}", a.host, a.port, a.ssl, a.startTls);
             try {
                 impl.send(message);
-                log.info("Email sent to {} (subject={}) via {}:{}", to, subject, a.host, a.port);
+                log.info("✅ SUCCESS: Email sent to {} (subject={}) via {}:{}", to, subject, a.host, a.port);
                 return true;
             } catch (org.springframework.mail.MailAuthenticationException mex) {
-                log.error("Authentication failed when sending email via {}:{} - {}", a.host, a.port, mex.toString());
+                log.error("❌ AUTHENTICATION FAILED when sending email via {}:{} - {}", a.host, a.port, mex.getMessage());
+                log.error("   Check MAIL_USERNAME and MAIL_PASSWORD are correct");
                 // try next transport
             } catch (Exception ex) {
-                log.error("Failed to send email via {}:{} - {}", a.host, a.port, ex.toString(), ex);
+                log.error("❌ FAILED to send email via {}:{} - {}: {}", a.host, a.port, ex.getClass().getSimpleName(), ex.getMessage());
             }
         }
 
-        log.error("All mail send attempts failed for subject={}", subject);
+        log.error("❌ ALL MAIL SEND ATTEMPTS FAILED for subject={}", subject);
+        log.error("💡 Possible issues:");
+        log.error("   1. Incorrect MAIL_USERNAME or MAIL_PASSWORD");
+        log.error("   2. AWS WorkMail account not activated");
+        log.error("   3. Domain {} not verified in AWS WorkMail", configuredSender.split("@")[1]);
+        log.error("   4. Sending limits exceeded");
         return false;
     }
 }
