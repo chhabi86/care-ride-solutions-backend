@@ -66,6 +66,7 @@ sudo systemctl reload nginx
 echo "4. Setting up environment variables for backend..."
 # Create systemd override directory if it doesn't exist
 sudo mkdir -p "$SYSTEMD_ENV_DIR"
+APP_ENV_FILE="/opt/backend/app.env"
 
 # Always recreate the environment file to ensure latest values
 echo "Creating/updating environment configuration..."
@@ -78,6 +79,18 @@ Environment="MAIL_PASSWORD=${MAIL_PASSWORD:-}"
 Environment="MAIL_FROM=${MAIL_FROM:-noreply@careridesolutionspa.com}"
 Environment="MAIL_DEBUG=${MAIL_DEBUG:-false}"
 EOF
+
+echo "Writing application EnvironmentFile ($APP_ENV_FILE) used by unit..."
+sudo tee "$APP_ENV_FILE" > /dev/null <<EOF
+MAIL_HOST=${MAIL_HOST:-smtp.mail.us-east-1.awsapps.com}
+MAIL_PORT=${MAIL_PORT:-465}
+MAIL_USERNAME=${MAIL_USERNAME:-}
+MAIL_PASSWORD=${MAIL_PASSWORD:-}
+MAIL_FROM=${MAIL_FROM:-noreply@careridesolutionspa.com}
+MAIL_DEBUG=${MAIL_DEBUG:-false}
+EOF
+sudo chmod 640 "$APP_ENV_FILE" || true
+sudo chown $USER "$APP_ENV_FILE" 2>/dev/null || true
     
 echo "5. Restarting backend service to apply new environment..."
 sudo systemctl daemon-reload
@@ -90,6 +103,8 @@ sleep 15
 
 echo "6. Showing final systemd environment file:"
 sudo cat "$SYSTEMD_ENV_FILE"
+echo "6b. Showing application EnvironmentFile contents:"
+sudo cat "$APP_ENV_FILE" || echo "(missing $APP_ENV_FILE)"
 
 echo "7. Showing effective process environment (filtered MAIL_*):"
 MAIN_PID=$(systemctl show -p MainPID --value care-ride-backend || true)
@@ -138,6 +153,7 @@ sudo systemctl is-active care-ride-backend || {
 echo "8b. systemd unit & environment summary:"
 systemctl show care-ride-backend -p FragmentPath -p ExecStart -p Environment | sed 's/^/  /'
 echo "--- unit file (systemctl cat) ---"; systemctl cat care-ride-backend | sed 's/^/  /'
+echo "--- ls -l of app.env ---"; ls -l "$APP_ENV_FILE" || true
 
 echo "9. Testing endpoints (nginx via port 80)..."
 # Retry health up to 10 times
