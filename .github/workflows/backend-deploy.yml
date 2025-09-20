@@ -54,14 +54,18 @@ jobs:
           ssh ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} "set -euo pipefail; if [ ! -d /opt/backend ]; then sudo mkdir -p /opt/backend; sudo chown ${{ secrets.DEPLOY_USER }} /opt/backend; fi"
           rsync -az --delete --exclude 'target/' ./ ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }}:/opt/backend/repo/
 
-      - name: Remote Build & Restart
+      - name: Remote Build (no restart yet)
         run: |
-          ssh ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} "set -euo pipefail; cd /opt/backend/repo; if [ -x ./mvnw ]; then ./mvnw -q clean package -DskipTests || mvn -q clean package -DskipTests; else mvn -q clean package -DskipTests; fi; cp target/*.war /opt/backend/app.war; sudo systemctl restart care-ride-backend"
+          ssh ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} "set -euo pipefail; cd /opt/backend/repo; if [ -x ./mvnw ]; then ./mvnw -q clean package -DskipTests || mvn -q clean package -DskipTests; else mvn -q clean package -DskipTests; fi; cp target/*.war /opt/backend/app.war"
 
-      - name: Deploy Nginx Config & Environment
+      - name: Pre-Restart Diagnostics (env + service list)
         run: |
-          # Run post-deploy script to configure nginx and environment
-          ssh ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} "set -euo pipefail; cd /opt/backend/repo; export MAIL_HOST='${{ secrets.MAIL_HOST || 'smtp.mail.us-east-1.awsapps.com' }}'; export MAIL_PORT='${{ secrets.MAIL_PORT || '465' }}'; export MAIL_USERNAME='${{ secrets.MAIL_USERNAME }}'; export MAIL_PASSWORD='${{ secrets.MAIL_PASSWORD }}'; export MAIL_FROM='${{ secrets.MAIL_FROM || 'noreply@careridesolutionspa.com' }}'; export MAIL_DEBUG='${{ secrets.MAIL_DEBUG || 'false' }}'; ./deploy/scripts/post-deploy.sh"
+          ssh ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} "set -euo pipefail; echo 'Listing candidate services:'; systemctl list-units --type=service --no-pager | egrep -i 'care|ride|backend' || true; echo 'Current env override (if any):'; sudo cat /etc/systemd/system/care-ride-backend.service.d/env.conf 2>/dev/null || echo '(no env.conf)'; PID=\$(systemctl show -p MainPID --value care-ride-backend || true); if [ -n \"$PID\" ] && [ \"$PID\" != \"0\" ]; then echo "Running PID=$PID"; sudo strings /proc/$PID/environ 2>/dev/null | egrep '^MAIL_' || echo '(no MAIL_ vars in process)'; fi"
+
+      - name: Deploy Nginx Config & Environment + Restart
+        run: |
+          # Export secrets and run post-deploy script (writes env.conf, reloads nginx, stop/start service inside script if implemented)
+          ssh ${{ secrets.DEPLOY_USER }}@${{ secrets.DEPLOY_HOST }} "set -euo pipefail; cd /opt/backend/repo; export MAIL_HOST='${{ secrets.MAIL_HOST || 'smtp.mail.us-east-1.awsapps.com' }}'; export MAIL_PORT='${{ secrets.MAIL_PORT || '465' }}'; export MAIL_USERNAME='${{ secrets.MAIL_USERNAME }}'; export MAIL_PASSWORD='${{ secrets.MAIL_PASSWORD }}'; export MAIL_FROM='${{ secrets.MAIL_FROM || 'noreply@careridesolutionspa.com' }}'; export MAIL_DEBUG='${{ secrets.MAIL_DEBUG || 'false' }}'; ./deploy/scripts/post-deploy.sh; echo 'After restart process env:'; PID=\$(systemctl show -p MainPID --value care-ride-backend || true); if [ -n \"$PID\" ] && [ \"$PID\" != \"0\" ]; then sudo strings /proc/$PID/environ 2>/dev/null | egrep '^MAIL_' || echo '(no MAIL_ vars in process)'; fi"
 
       - name: Tail Backend Logs (email debug)
         run: |
