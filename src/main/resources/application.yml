@@ -1,7 +1,7 @@
 
 server:
   port: 8080
-# Trigger deployment with corrected GitHub secrets
+# Deploy with corrected MAIL_USERNAME GitHub secret
 spring:
   datasource:
     # Prefer full SPRING_DATASOURCE_URL if provided, otherwise build from DB_* pieces (default service name 'db').
