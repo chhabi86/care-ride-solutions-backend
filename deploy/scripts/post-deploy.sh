@@ -92,14 +92,13 @@ echo "6. Showing final systemd environment file:"
 sudo cat "$SYSTEMD_ENV_FILE"
 
 echo "7. Showing effective process environment (filtered MAIL_*):"
-PGREP_PID=$(pgrep -f 'care-ride-backend' | head -1 || true)
-if [ -n "$PGREP_PID" ]; then
-    echo "Process PID: $PGREP_PID"
-    # Use hexdump fallback instead of strings (may not be installed)
+MAIN_PID=$(systemctl show -p MainPID --value care-ride-backend || true)
+if [ -n "$MAIN_PID" ] && [ "$MAIN_PID" != "0" ]; then
+    echo "MainPID reported by systemd: $MAIN_PID"
     if command -v strings >/dev/null 2>&1; then
-        RAW_ENV=$(sudo strings /proc/$PGREP_PID/environ 2>/dev/null)
+        RAW_ENV=$(sudo strings /proc/$MAIN_PID/environ 2>/dev/null)
     else
-        RAW_ENV=$(sudo cat /proc/$PGREP_PID/environ 2>/dev/null | tr '\0' '\n')
+        RAW_ENV=$(sudo cat /proc/$MAIN_PID/environ 2>/dev/null | tr '\0' '\n')
     fi
     PROC_ENV=$(echo "$RAW_ENV" | grep '^MAIL_' || true)
     if [ -n "$PROC_ENV" ]; then
@@ -126,7 +125,7 @@ if [ -n "$PGREP_PID" ]; then
         echo "No MAIL_* vars in process environ dump"
     fi
 else
-    echo "Backend process PID not found"
+    echo "Backend MainPID not found (service may not have started)"
 fi
 
 echo "8. Checking service status..."
@@ -136,7 +135,11 @@ sudo systemctl is-active care-ride-backend || {
     exit 1
 }
 
-echo "9. Testing endpoints..."
+echo "8b. systemd unit & environment summary:"
+systemctl show care-ride-backend -p FragmentPath -p ExecStart -p Environment | sed 's/^/  /'
+echo "--- unit file (systemctl cat) ---"; systemctl cat care-ride-backend | sed 's/^/  /'
+
+echo "9. Testing endpoints (nginx via port 80)..."
 # Retry health up to 10 times
 HEALTH_OK=0
 for i in {1..10}; do
@@ -150,6 +153,21 @@ done
 if [ $HEALTH_OK -ne 1 ]; then
     echo "✗ Health endpoint failed after retries";
     sudo journalctl -u care-ride-backend -n 40 --no-pager | sed 's/^/[journal]/';
+fi
+
+echo "10. Testing internal (direct) endpoint attempts..."
+# Try common app ports (8080, 8081) directly bypassing nginx
+for P in 8080 8081; do
+    if curl -fsS http://localhost:$P/actuator/health >/dev/null 2>&1; then
+         echo "✓ Direct health OK on port $P"; DIRECT_PORT=$P; break; fi
+ten
+done || true
+if [ -n "$DIRECT_PORT" ]; then
+    curl -fsS -o /dev/null -w "Direct contact %s -> HTTP %{http_code}\n" -X POST \
+        http://localhost:$DIRECT_PORT/api/contact -H 'Content-Type: application/json' \
+        -d '{"name":"DirectTest","phone":"999","email":"d@test.com","reason":"Direct","message":"Direct"}' || true
+else
+    echo "No direct application port responded to health checks."
 fi
 
 # Test contact endpoint with a simple POST (only if health succeeded)
