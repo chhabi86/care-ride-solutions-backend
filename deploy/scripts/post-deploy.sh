@@ -91,14 +91,23 @@ sleep 15
 echo "6. Showing final systemd environment file:"
 sudo cat "$SYSTEMD_ENV_FILE"
 
-echo "7. Checking service status..."
+echo "7. Showing effective process environment (filtered MAIL_*):"
+PGREP_PID=$(pgrep -f 'care-ride-backend' | head -1 || true)
+if [ -n "$PGREP_PID" ]; then
+    echo "Process PID: $PGREP_PID"
+    sudo strings /proc/$PGREP_PID/environ | tr '\0' '\n' | grep '^MAIL_' || echo "No MAIL_* vars in process environ dump"
+else
+    echo "Backend process PID not found"
+fi
+
+echo "8. Checking service status..."
 sudo systemctl is-active care-ride-backend || {
     echo "Backend service failed to start. Checking logs:"
     sudo journalctl -u care-ride-backend -n 20 --no-pager
     exit 1
 }
 
-echo "8. Testing endpoints..."
+echo "9. Testing endpoints..."
 # Test health endpoint
 curl -f http://localhost/api/actuator/health > /dev/null && echo "✓ Health endpoint OK" || echo "✗ Health endpoint failed"
 

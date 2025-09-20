@@ -93,6 +93,9 @@ jobs:
             echo "⚠ Contact endpoint status: $CONTACT_STATUS (may need email config)"
           fi
 
+          echo "Fetching mail debug endpoint..."
+          curl -fsS http://$D/api/debug/mail || echo "(mail debug endpoint unreachable)"
+
       - name: Summary
         if: always()
         run: |
