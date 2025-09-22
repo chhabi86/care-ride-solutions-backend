@@ -82,6 +82,12 @@ EOF
 
 echo "Writing application EnvironmentFile ($APP_ENV_FILE) used by unit..."
 sudo tee "$APP_ENV_FILE" > /dev/null <<EOF
+# Database Configuration (PostgreSQL)
+SPRING_DATASOURCE_URL=${SPRING_DATASOURCE_URL:-jdbc:postgresql://localhost:5432/caredb}
+SPRING_DATASOURCE_USERNAME=${SPRING_DATASOURCE_USERNAME:-careuser}
+SPRING_DATASOURCE_PASSWORD=${SPRING_DATASOURCE_PASSWORD:-changeme_db_password}
+
+# Email Configuration
 MAIL_HOST=${MAIL_HOST:-smtp.mail.us-east-1.awsapps.com}
 MAIL_PORT=${MAIL_PORT:-465}
 MAIL_USERNAME=${MAIL_USERNAME:-}
