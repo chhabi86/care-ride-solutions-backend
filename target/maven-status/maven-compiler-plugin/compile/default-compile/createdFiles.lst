@@ -16,4 +16,5 @@ com/care/ride/config/DevDataLoader.class
 com/care/ride/service/EmailService.class
 com/care/ride/CareRideApplication.class
 com/care/ride/service/SesApiService.class
+com/care/ride/service/SendGridService.class
 com/care/ride/domain/Contact.class
