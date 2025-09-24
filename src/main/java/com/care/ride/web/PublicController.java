@@ -7,7 +7,6 @@ import com.care.ride.domain.Contact;
 import com.care.ride.repo.ContactRepo;
 import com.care.ride.service.EmailService;
 import com.care.ride.service.SesApiService;
-import com.care.ride.service.SendGridService;
 import com.care.ride.repo.*;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -33,17 +32,15 @@ public class PublicController {
 	private final EmailService emailService;
 	private final ContactRepo contactRepo;
 	private final SesApiService sesApiService;
-	private final SendGridService sendGridService;
 	@Value("${mail.notify:${MAIL_NOTIFY:${MAIL_FROM:${MAIL_USERNAME:contact@careridesolutionspa.com}}}}")
 	private String notifyRecipient;
 
-	public PublicController(ServiceTypeRepo sRepo, BookingRepo bRepo, EmailService emailService, ContactRepo contactRepo, SesApiService sesApiService, SendGridService sendGridService){
+	public PublicController(ServiceTypeRepo sRepo, BookingRepo bRepo, EmailService emailService, ContactRepo contactRepo, SesApiService sesApiService){
 		this.sRepo = sRepo;
 		this.bRepo = bRepo;
 		this.emailService = emailService;
 		this.contactRepo = contactRepo;
 		this.sesApiService = sesApiService;
-		this.sendGridService = sendGridService;
 	}
 	@PostMapping("/contact")
 	public ResponseEntity<?> contact(@RequestBody @Valid ContactRequest req) {
@@ -158,14 +155,6 @@ public class PublicController {
 		java.util.Map<String, Object> result = new java.util.HashMap<>();
 		result.put("notifyRecipient", notifyRecipient);
 		result.put("sesApiTest", sesApiService.testSesConnection());
-		return result;
-	}
-	
-	@GetMapping("/debug/sendgrid")
-	public java.util.Map<String, Object> debugSendGrid() {
-		java.util.Map<String, Object> result = new java.util.HashMap<>();
-		result.put("notifyRecipient", notifyRecipient);
-		result.put("sendGridTest", sendGridService.testSendGridConnection());
 		return result;
 	}
 }

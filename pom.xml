@@ -92,12 +92,6 @@
       <artifactId>ses</artifactId>
       <version>2.25.60</version>
     </dependency>
-    <!-- SendGrid HTTP API -->
-    <dependency>
-      <groupId>com.sendgrid</groupId>
-      <artifactId>sendgrid-java</artifactId>
-      <version>4.10.2</version>
-    </dependency>
   </dependencies>
   <build>
     <plugins>
