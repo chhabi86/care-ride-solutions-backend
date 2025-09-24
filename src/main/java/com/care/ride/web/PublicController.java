@@ -6,6 +6,7 @@ import com.care.ride.dto.ContactRequest;
 import com.care.ride.domain.Contact;
 import com.care.ride.repo.ContactRepo;
 import com.care.ride.service.EmailService;
+import com.care.ride.service.SesApiService;
 import com.care.ride.repo.*;
 import jakarta.validation.Valid;
 import org.springframework.http.ResponseEntity;
@@ -30,14 +31,16 @@ public class PublicController {
 	private final BookingRepo bRepo;
 	private final EmailService emailService;
 	private final ContactRepo contactRepo;
+	private final SesApiService sesApiService;
 	@Value("${mail.notify:${MAIL_NOTIFY:${MAIL_FROM:${MAIL_USERNAME:contact@careridesolutionspa.com}}}}")
 	private String notifyRecipient;
 
-	public PublicController(ServiceTypeRepo sRepo, BookingRepo bRepo, EmailService emailService, ContactRepo contactRepo){
+	public PublicController(ServiceTypeRepo sRepo, BookingRepo bRepo, EmailService emailService, ContactRepo contactRepo, SesApiService sesApiService){
 		this.sRepo = sRepo;
 		this.bRepo = bRepo;
 		this.emailService = emailService;
 		this.contactRepo = contactRepo;
+		this.sesApiService = sesApiService;
 	}
 	@PostMapping("/contact")
 	public ResponseEntity<?> contact(@RequestBody @Valid ContactRequest req) {
@@ -143,16 +146,15 @@ public class PublicController {
 	}
 
 	@GetMapping("/debug/smtp")
-	public ResponseEntity<?> debugSmtp() {
-		try {
-			java.util.Map<String, Object> result = emailService.testSmtpConnection();
-			return ResponseEntity.ok(result);
-		} catch (Exception e) {
-			return ResponseEntity.status(500).body(java.util.Map.of(
-					"error", "SMTP_DEBUG_FAILED",
-					"message", e.getMessage(),
-					"type", e.getClass().getSimpleName()
-			));
-		}
+	public java.util.Map<String, Object> debugSmtp() {
+		return emailService.testSmtpConnection();
+	}
+
+	@GetMapping("/debug/ses")
+	public java.util.Map<String, Object> debugSes() {
+		java.util.Map<String, Object> result = new java.util.HashMap<>();
+		result.put("notifyRecipient", notifyRecipient);
+		result.put("sesApiTest", sesApiService.testSesConnection());
+		return result;
 	}
 }
