@@ -5,6 +5,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import software.amazon.awssdk.auth.credentials.EnvironmentVariableCredentialsProvider;
+import software.amazon.awssdk.auth.credentials.AwsBasicCredentials;
+import software.amazon.awssdk.auth.credentials.StaticCredentialsProvider;
 import software.amazon.awssdk.regions.Region;
 import software.amazon.awssdk.services.ses.SesClient;
 import software.amazon.awssdk.services.ses.model.*;
@@ -22,6 +24,12 @@ public class SesApiService {
     
     @Value("${aws.ses.from-email:contact@careridesolutionspa.com}")
     private String fromEmail;
+    
+    @Value("${aws.access-key-id:#{null}}")
+    private String awsAccessKeyId;
+    
+    @Value("${aws.secret-access-key:#{null}}")
+    private String awsSecretAccessKey;
 
     /**
      * Send email using AWS SES HTTP API instead of SMTP.
@@ -35,11 +43,23 @@ public class SesApiService {
         log.info("AWS Region: {}", awsRegion);
         
         try {
-            // Create SES client using environment credentials
-            SesClient sesClient = SesClient.builder()
-                .region(Region.of(awsRegion))
-                .credentialsProvider(EnvironmentVariableCredentialsProvider.create())
-                .build();
+            // Create SES client with explicit credentials if available, otherwise use environment
+            SesClient sesClient;
+            
+            if (awsAccessKeyId != null && awsSecretAccessKey != null) {
+                log.info("Using explicit AWS credentials from configuration");
+                AwsBasicCredentials awsCredentials = AwsBasicCredentials.create(awsAccessKeyId, awsSecretAccessKey);
+                sesClient = SesClient.builder()
+                    .region(Region.of(awsRegion))
+                    .credentialsProvider(StaticCredentialsProvider.create(awsCredentials))
+                    .build();
+            } else {
+                log.info("Using AWS credentials from environment variables");
+                sesClient = SesClient.builder()
+                    .region(Region.of(awsRegion))
+                    .credentialsProvider(EnvironmentVariableCredentialsProvider.create())
+                    .build();
+            }
             
             // Build the email message
             Message message = Message.builder()
@@ -98,11 +118,23 @@ public class SesApiService {
         result.put("fromEmail", fromEmail);
         
         try {
-            // Create SES client
-            SesClient sesClient = SesClient.builder()
-                .region(Region.of(awsRegion))
-                .credentialsProvider(EnvironmentVariableCredentialsProvider.create())
-                .build();
+            // Create SES client with explicit credentials if available
+            SesClient sesClient;
+            
+            if (awsAccessKeyId != null && awsSecretAccessKey != null) {
+                log.info("Testing with explicit AWS credentials from configuration");
+                AwsBasicCredentials awsCredentials = AwsBasicCredentials.create(awsAccessKeyId, awsSecretAccessKey);
+                sesClient = SesClient.builder()
+                    .region(Region.of(awsRegion))
+                    .credentialsProvider(StaticCredentialsProvider.create(awsCredentials))
+                    .build();
+            } else {
+                log.info("Testing with AWS credentials from environment variables");
+                sesClient = SesClient.builder()
+                    .region(Region.of(awsRegion))
+                    .credentialsProvider(EnvironmentVariableCredentialsProvider.create())
+                    .build();
+            }
             
             // Try to get account send quota (requires minimal permissions)
             GetSendQuotaRequest quotaRequest = GetSendQuotaRequest.builder().build();
