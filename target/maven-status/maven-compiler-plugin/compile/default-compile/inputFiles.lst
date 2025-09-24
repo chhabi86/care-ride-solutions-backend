@@ -13,5 +13,6 @@
 /Users/chhabisharma/Documents/Care-ride-solution/care-ride-solutions-backend/src/main/java/com/care/ride/repo/ContactRepo.java
 /Users/chhabisharma/Documents/Care-ride-solution/care-ride-solutions-backend/src/main/java/com/care/ride/domain/Booking.java
 /Users/chhabisharma/Documents/Care-ride-solution/care-ride-solutions-backend/src/main/java/com/care/ride/domain/Contact.java
+/Users/chhabisharma/Documents/Care-ride-solution/care-ride-solutions-backend/src/main/java/com/care/ride/service/SesApiService.java
 /Users/chhabisharma/Documents/Care-ride-solution/care-ride-solutions-backend/src/main/java/com/care/ride/dto/ContactRequest.java
 /Users/chhabisharma/Documents/Care-ride-solution/care-ride-solutions-backend/src/main/java/com/care/ride/config/SecurityConfig.java
