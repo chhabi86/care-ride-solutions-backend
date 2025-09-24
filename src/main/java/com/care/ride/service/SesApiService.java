@@ -20,7 +20,7 @@ public class SesApiService {
     @Value("${aws.ses.region:us-east-1}")
     private String awsRegion;
     
-    @Value("${aws.ses.from-email:info@careridesolutionspa.com}")
+    @Value("${aws.ses.from-email:contact@careridesolutionspa.com}")
     private String fromEmail;
 
     /**

@@ -5,7 +5,7 @@ WARNING: sun.misc.Unsafe::staticFieldBase will be removed in a future release
 [INFO] Scanning for projects...
 [INFO] 
 [INFO] ------------------< com.care.ride:care-ride-backend >-------------------
-[INFO] Building care-ride-backend 0.0.1
+[INFO] Building care-ride-backend 0.0.1-SNAPSHOT
 [INFO]   from pom.xml
 [INFO] --------------------------------[ war ]---------------------------------
 [INFO] 
@@ -42,30 +42,30 @@ WARNING: sun.misc.Unsafe::staticFieldBase will be removed in a future release
 
  :: Spring Boot ::                (v3.3.2)
 
-2025-09-22T14:26:23.555-04:00  INFO 30390 --- [           main] com.care.ride.CareRideApplication        : Starting CareRideApplication using Java 24.0.2 with PID 30390 (/Users/chhabisharma/Documents/Care-ride-solution/care-ride-solutions-backend/target/classes started by chhabisharma in /Users/chhabisharma/Documents/Care-ride-solution/care-ride-solutions-backend)
-2025-09-22T14:26:23.557-04:00  INFO 30390 --- [           main] com.care.ride.CareRideApplication        : The following 1 profile is active: "local"
-2025-09-22T14:26:23.916-04:00  INFO 30390 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2025-09-22T14:26:23.939-04:00  INFO 30390 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 20 ms. Found 3 JPA repository interfaces.
+2025-09-24T15:03:04.717-04:00  INFO 36277 --- [           main] com.care.ride.CareRideApplication        : Starting CareRideApplication using Java 24.0.2 with PID 36277 (/Users/chhabisharma/Documents/Care-ride-solution/care-ride-solutions-backend/target/classes started by chhabisharma in /Users/chhabisharma/Documents/Care-ride-solution/care-ride-solutions-backend)
+2025-09-24T15:03:04.718-04:00  INFO 36277 --- [           main] com.care.ride.CareRideApplication        : The following 1 profile is active: "local"
+2025-09-24T15:03:05.095-04:00  INFO 36277 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-09-24T15:03:05.118-04:00  INFO 36277 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 20 ms. Found 3 JPA repository interfaces.
 WARNING: A restricted method in java.lang.System has been called
 WARNING: java.lang.System::load has been called by org.apache.tomcat.jni.Library in an unnamed module (file:/Users/chhabisharma/.m2/repository/org/apache/tomcat/embed/tomcat-embed-core/10.1.26/tomcat-embed-core-10.1.26.jar)
 WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
 WARNING: Restricted methods will be blocked in a future release unless native access is enabled
 
-2025-09-22T14:26:24.254-04:00  INFO 30390 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
-2025-09-22T14:26:24.259-04:00  INFO 30390 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2025-09-22T14:26:24.260-04:00  INFO 30390 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.26]
-2025-09-22T14:26:24.279-04:00  INFO 30390 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2025-09-22T14:26:24.280-04:00  INFO 30390 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 705 ms
-2025-09-22T14:26:24.343-04:00  INFO 30390 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2025-09-22T14:26:24.427-04:00  INFO 30390 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:caredb user=SA
-2025-09-22T14:26:24.428-04:00  INFO 30390 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2025-09-22T14:26:24.434-04:00  INFO 30390 --- [           main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:caredb'
-2025-09-22T14:26:24.514-04:00  INFO 30390 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2025-09-22T14:26:24.534-04:00  INFO 30390 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.2.Final
-2025-09-22T14:26:24.545-04:00  INFO 30390 --- [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2025-09-22T14:26:24.653-04:00  INFO 30390 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2025-09-22T14:26:24.669-04:00  WARN 30390 --- [           main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2025-09-22T14:26:25.034-04:00  INFO 30390 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-09-24T15:03:05.444-04:00  INFO 36277 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-09-24T15:03:05.449-04:00  INFO 36277 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-09-24T15:03:05.449-04:00  INFO 36277 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.26]
+2025-09-24T15:03:05.471-04:00  INFO 36277 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-09-24T15:03:05.471-04:00  INFO 36277 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 731 ms
+2025-09-24T15:03:05.536-04:00  INFO 36277 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-09-24T15:03:05.625-04:00  INFO 36277 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:caredb user=SA
+2025-09-24T15:03:05.626-04:00  INFO 36277 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-09-24T15:03:05.632-04:00  INFO 36277 --- [           main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:caredb'
+2025-09-24T15:03:05.714-04:00  INFO 36277 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-09-24T15:03:05.735-04:00  INFO 36277 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.2.Final
+2025-09-24T15:03:05.748-04:00  INFO 36277 --- [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-09-24T15:03:05.861-04:00  INFO 36277 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-09-24T15:03:05.878-04:00  WARN 36277 --- [           main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-09-24T15:03:06.256-04:00  INFO 36277 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
 Hibernate: 
     drop table if exists booking cascade 
 Hibernate: 
@@ -109,16 +109,16 @@ Hibernate:
        add constraint FKjx7gpfq3whfqo33uyhj1ckuiv 
        foreign key (service_type_id) 
        references service_type
-2025-09-22T14:26:25.055-04:00  INFO 30390 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2025-09-22T14:26:25.223-04:00  WARN 30390 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2025-09-22T14:26:25.247-04:00  INFO 30390 --- [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name userDetailsService
-2025-09-22T14:26:25.439-04:00  INFO 30390 --- [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoints beneath base path '/actuator'
-2025-09-22T14:26:25.641-04:00  INFO 30390 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
-2025-09-22T14:26:25.650-04:00  INFO 30390 --- [           main] com.care.ride.CareRideApplication        : Started CareRideApplication in 2.261 seconds (process running for 2.397)
-2025-09-22T14:28:16.511-04:00  INFO 30390 --- [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2025-09-22T14:28:16.511-04:00  INFO 30390 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2025-09-22T14:28:16.512-04:00  INFO 30390 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
-[contact] inbound payload email=test@example.com reason=Testing notifyRecipient=contact@careridesolutionspa.com
+2025-09-24T15:03:06.278-04:00  INFO 36277 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-09-24T15:03:06.448-04:00  WARN 36277 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-09-24T15:03:06.474-04:00  INFO 36277 --- [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name userDetailsService
+2025-09-24T15:03:06.675-04:00  INFO 36277 --- [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoints beneath base path '/actuator'
+2025-09-24T15:03:06.893-04:00  INFO 36277 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-09-24T15:03:06.901-04:00  INFO 36277 --- [           main] com.care.ride.CareRideApplication        : Started CareRideApplication in 2.357 seconds (process running for 2.494)
+2025-09-24T15:03:58.339-04:00  INFO 36277 --- [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-09-24T15:03:58.339-04:00  INFO 36277 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-09-24T15:03:58.340-04:00  INFO 36277 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+[contact] inbound payload email=test@example.com reason=Test SES notifyRecipient=contact@careridesolutionspa.com
 Hibernate: 
     insert 
     into
@@ -126,37 +126,33 @@ Hibernate:
         (created_at, email, message, name, phone, reason, id) 
     values
         (?, ?, ?, ?, ?, ?, default)
-[contact] saved id=1 size=83
-2025-09-22T14:29:42.057-04:00  INFO 30390 --- [onPool-worker-1] com.care.ride.service.EmailService       : === EMAIL SEND ATTEMPT ===
-2025-09-22T14:29:42.057-04:00  INFO 30390 --- [onPool-worker-1] com.care.ride.service.EmailService       : From: contact@careridesolutionspa.com
-2025-09-22T14:29:42.057-04:00  INFO 30390 --- [onPool-worker-1] com.care.ride.service.EmailService       : To: contact@careridesolutionspa.com
-2025-09-22T14:29:42.057-04:00  INFO 30390 --- [onPool-worker-1] com.care.ride.service.EmailService       : Subject: New Contact Form Submission: Testing
-2025-09-22T14:29:42.057-04:00  INFO 30390 --- [onPool-worker-1] com.care.ride.service.EmailService       : Host: smtp.office365.com, Port: 587
-2025-09-22T14:29:42.057-04:00  INFO 30390 --- [onPool-worker-1] com.care.ride.service.EmailService       : Password configured: YES
-2025-09-22T14:29:42.057-04:00  INFO 30390 --- [onPool-worker-1] com.care.ride.service.EmailService       : Password length: 17
-2025-09-22T14:29:42.059-04:00  INFO 30390 --- [onPool-worker-1] com.care.ride.service.EmailService       : Trying mail send using host=smtp.office365.com, port=587, ssl=false, starttls=true, label=configured
-2025-09-22T14:29:48.960-04:00 ERROR 30390 --- [onPool-worker-1] com.care.ride.service.EmailService       : ❌ AUTHENTICATION FAILED when sending email via smtp.office365.com:587 - Authentication failed
-2025-09-22T14:29:48.962-04:00 ERROR 30390 --- [onPool-worker-1] com.care.ride.service.EmailService       :    Check MAIL_USERNAME and MAIL_PASSWORD are correct
-2025-09-22T14:29:48.964-04:00  INFO 30390 --- [onPool-worker-1] com.care.ride.service.EmailService       : Trying mail send using host=smtp.office365.com, port=465, ssl=true, starttls=false, label=ssl465
-2025-09-22T14:29:58.969-04:00 ERROR 30390 --- [onPool-worker-1] com.care.ride.service.EmailService       : ❌ FAILED to send email via smtp.office365.com:465 - MailSendException: Mail server connection failed. Failed messages: org.eclipse.angus.mail.util.MailConnectException: Couldn't connect to host, port: smtp.office365.com, 465; timeout 10000;
-  nested exception is:
-	java.net.SocketTimeoutException: Connect timed out
-2025-09-22T14:29:58.971-04:00  INFO 30390 --- [onPool-worker-1] com.care.ride.service.EmailService       : Trying mail send using host=smtp.office365.com, port=25, ssl=false, starttls=false, label=plain25
-2025-09-22T14:30:04.184-04:00 ERROR 30390 --- [onPool-worker-1] com.care.ride.service.EmailService       : ❌ FAILED to send email via smtp.office365.com:25 - MailSendException: Failed messages: org.eclipse.angus.mail.smtp.SMTPSendFailedException: 451 5.7.3 STARTTLS is required to send mail [CH5P220CA0017.NAMP220.PROD.OUTLOOK.COM 2025-09-22T18:30:04.156Z 08DDF9B0CC84AC1D]
-
-2025-09-22T14:30:04.184-04:00 ERROR 30390 --- [onPool-worker-1] com.care.ride.service.EmailService       : ❌ ALL MAIL SEND ATTEMPTS FAILED for subject=New Contact Form Submission: Testing
-2025-09-22T14:30:04.184-04:00 ERROR 30390 --- [onPool-worker-1] com.care.ride.service.EmailService       : 💡 Possible issues:
-2025-09-22T14:30:04.184-04:00 ERROR 30390 --- [onPool-worker-1] com.care.ride.service.EmailService       :    1. Incorrect MAIL_USERNAME or MAIL_PASSWORD
-2025-09-22T14:30:04.184-04:00 ERROR 30390 --- [onPool-worker-1] com.care.ride.service.EmailService       :    2. AWS WorkMail account not activated
-2025-09-22T14:30:04.184-04:00 ERROR 30390 --- [onPool-worker-1] com.care.ride.service.EmailService       :    3. Domain careridesolutionspa.com not verified in AWS WorkMail
-2025-09-22T14:30:04.184-04:00 ERROR 30390 --- [onPool-worker-1] com.care.ride.service.EmailService       :    4. Sending limits exceeded
-[contact] async email result id=1 ok=false
-2025-09-22T14:39:25.103-04:00  INFO 30390 --- [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+[contact] saved id=1 size=72
+2025-09-24T15:03:58.445-04:00  INFO 36277 --- [onPool-worker-1] com.care.ride.service.EmailService       : === EMAIL SEND ATTEMPT ===
+2025-09-24T15:03:58.445-04:00  INFO 36277 --- [onPool-worker-1] com.care.ride.service.EmailService       : From: contact@careridesolutionspa.com
+2025-09-24T15:03:58.445-04:00  INFO 36277 --- [onPool-worker-1] com.care.ride.service.EmailService       : To: contact@careridesolutionspa.com
+2025-09-24T15:03:58.445-04:00  INFO 36277 --- [onPool-worker-1] com.care.ride.service.EmailService       : Subject: New Contact Form Submission: Test SES
+2025-09-24T15:03:58.445-04:00  INFO 36277 --- [onPool-worker-1] com.care.ride.service.EmailService       : Host: smtp.office365.com, Port: 587
+2025-09-24T15:03:58.445-04:00  INFO 36277 --- [onPool-worker-1] com.care.ride.service.EmailService       : Password configured: YES
+2025-09-24T15:03:58.445-04:00  INFO 36277 --- [onPool-worker-1] com.care.ride.service.EmailService       : Password length: 17
+2025-09-24T15:03:58.449-04:00  INFO 36277 --- [onPool-worker-1] com.care.ride.service.EmailService       : Trying mail send using host=smtp.office365.com, port=587, ssl=false, starttls=true, label=configured
+2025-09-24T15:04:01.685-04:00  INFO 36277 --- [onPool-worker-1] com.care.ride.service.EmailService       : ✅ SUCCESS: Email sent to contact@careridesolutionspa.com (subject=New Contact Form Submission: Test SES) via smtp.office365.com:587
+[contact] async email result id=1 ok=true
+[contact] inbound payload email=test@example.com reason=Force SES notifyRecipient=contact@careridesolutionspa.com
 Hibernate: 
-    drop table if exists booking cascade 
-Hibernate: 
-    drop table if exists contacts cascade 
-Hibernate: 
-    drop table if exists service_type cascade 
-2025-09-22T14:39:25.106-04:00  INFO 30390 --- [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
-2025-09-22T14:39:25.108-04:00  INFO 30390 --- [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
+    insert 
+    into
+        contacts
+        (created_at, email, message, name, phone, reason, id) 
+    values
+        (?, ?, ?, ?, ?, ?, default)
+[contact] saved id=2 size=71
+2025-09-24T15:04:36.134-04:00  INFO 36277 --- [onPool-worker-1] com.care.ride.service.EmailService       : === EMAIL SEND ATTEMPT ===
+2025-09-24T15:04:36.134-04:00  INFO 36277 --- [onPool-worker-1] com.care.ride.service.EmailService       : From: contact@careridesolutionspa.com
+2025-09-24T15:04:36.134-04:00  INFO 36277 --- [onPool-worker-1] com.care.ride.service.EmailService       : To: contact@careridesolutionspa.com
+2025-09-24T15:04:36.134-04:00  INFO 36277 --- [onPool-worker-1] com.care.ride.service.EmailService       : Subject: New Contact Form Submission: Force SES
+2025-09-24T15:04:36.134-04:00  INFO 36277 --- [onPool-worker-1] com.care.ride.service.EmailService       : Host: smtp.office365.com, Port: 587
+2025-09-24T15:04:36.134-04:00  INFO 36277 --- [onPool-worker-1] com.care.ride.service.EmailService       : Password configured: YES
+2025-09-24T15:04:36.134-04:00  INFO 36277 --- [onPool-worker-1] com.care.ride.service.EmailService       : Password length: 17
+2025-09-24T15:04:36.135-04:00  INFO 36277 --- [onPool-worker-1] com.care.ride.service.EmailService       : Trying mail send using host=smtp.office365.com, port=587, ssl=false, starttls=true, label=configured
+2025-09-24T15:04:38.128-04:00  INFO 36277 --- [onPool-worker-1] com.care.ride.service.EmailService       : ✅ SUCCESS: Email sent to contact@careridesolutionspa.com (subject=New Contact Form Submission: Force SES) via smtp.office365.com:587
+[contact] async email result id=2 ok=true
