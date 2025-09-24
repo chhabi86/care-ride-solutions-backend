@@ -23,7 +23,7 @@ spring:
   flyway:
     enabled: false
   mail:
-    # Microsoft SMTP for local development testing
+    # Microsoft SMTP for local development testing  
     host: smtp.office365.com
     port: 587
     username: contact@careridesolutionspa.com

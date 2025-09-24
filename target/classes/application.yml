@@ -15,31 +15,33 @@ spring:
       ddl-auto: update
     properties:
       hibernate:
-  show_sql: false
+        show_sql: false
   flyway:
     enabled: false
   mail:
-    # HARD-CODED Microsoft SMTP (TEMPORARY - user chose option C)
-    host: smtp.office365.com
-    port: 587
-    username: contact@careridesolutionspa.com
-    password: Transportation1@@
+    # Environment-based SMTP configuration
+    # Local: Microsoft 365, Production: Amazon SES
+    host: ${MAIL_HOST:smtp.office365.com}
+    port: ${MAIL_PORT:587}
+    username: ${MAIL_USERNAME:contact@careridesolutionspa.com}
+    password: ${MAIL_PASSWORD:Transportation1@@}
     protocol: smtp
     properties:
       mail:
         smtp:
           auth: true
-          from: contact@careridesolutionspa.com
+          from: ${MAIL_FROM:contact@careridesolutionspa.com}
           starttls:
-            enable: true
-            required: true
-          connectiontimeout: 10000
-          timeout: 10000
-          writetimeout: 10000
-        debug: false
+            enable: ${MAIL_STARTTLS_ENABLE:true}
+            required: ${MAIL_STARTTLS_REQUIRED:true}
+          connectiontimeout: ${MAIL_TIMEOUT:10000}
+          timeout: ${MAIL_TIMEOUT:10000}
+          writetimeout: ${MAIL_TIMEOUT:10000}
+        debug: ${MAIL_DEBUG:false}
 # Custom notification recipient (MAIL_NOTIFY) is consumed directly via @Value in PublicController.
 mail:
   notify: contact@careridesolutionspa.com
+
 jwt:
   secret: ${JWT_SECRET:CHANGE_ME}
 

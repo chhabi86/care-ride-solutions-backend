@@ -129,10 +129,10 @@ public class EmailService {
         }
 
         log.error("❌ ALL MAIL SEND ATTEMPTS FAILED for subject={}", subject);
-        log.error("💡 Possible issues:");
+        log.error("� Possible issues:");
         log.error("   1. Incorrect MAIL_USERNAME or MAIL_PASSWORD");
         log.error("   2. AWS WorkMail account not activated");
-        log.error("   3. Domain {} not verified in AWS WorkMail", configuredSender.split("@")[1]);
+        log.error("   3. Domain careridesolutionspa.com not verified in AWS WorkMail");
         log.error("   4. Sending limits exceeded");
         return false;
     }

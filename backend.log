@@ -1,3 +1,37 @@
+WARNING: A terminally deprecated method in sun.misc.Unsafe has been called
+WARNING: sun.misc.Unsafe::staticFieldBase has been called by com.google.inject.internal.aop.HiddenClassDefiner (file:/opt/homebrew/Cellar/maven/3.9.11/libexec/lib/guice-5.1.0-classes.jar)
+WARNING: Please consider reporting this to the maintainers of class com.google.inject.internal.aop.HiddenClassDefiner
+WARNING: sun.misc.Unsafe::staticFieldBase will be removed in a future release
+[INFO] Scanning for projects...
+[INFO] 
+[INFO] ------------------< com.care.ride:care-ride-backend >-------------------
+[INFO] Building care-ride-backend 0.0.1
+[INFO]   from pom.xml
+[INFO] --------------------------------[ war ]---------------------------------
+[INFO] 
+[INFO] >>> spring-boot:3.3.2:run (default-cli) > test-compile @ care-ride-backend >>>
+[INFO] 
+[INFO] --- spring-boot:3.3.2:build-info (build-info) @ care-ride-backend ---
+[INFO] 
+[INFO] --- resources:3.3.1:resources (default-resources) @ care-ride-backend ---
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] Copying 5 resources from src/main/resources to target/classes
+[INFO] 
+[INFO] --- compiler:3.11.0:compile (default-compile) @ care-ride-backend ---
+[INFO] Nothing to compile - all classes are up to date
+[INFO] 
+[INFO] --- resources:3.3.1:testResources (default-testResources) @ care-ride-backend ---
+[WARNING] Using platform encoding (UTF-8 actually) to copy filtered resources, i.e. build is platform dependent!
+[INFO] skip non existing resourceDirectory /Users/chhabisharma/Documents/Care-ride-solution/care-ride-solutions-backend/src/test/resources
+[INFO] 
+[INFO] --- compiler:3.11.0:testCompile (default-testCompile) @ care-ride-backend ---
+[INFO] No sources to compile
+[INFO] 
+[INFO] <<< spring-boot:3.3.2:run (default-cli) < test-compile @ care-ride-backend <<<
+[INFO] 
+[INFO] 
+[INFO] --- spring-boot:3.3.2:run (default-cli) @ care-ride-backend ---
+[INFO] Attaching agents: []
 
   .   ____          _            __ _ _
  /\\ / ___'_ __ _ _(_)_ __  __ _ \ \ \ \
@@ -8,25 +42,30 @@
 
  :: Spring Boot ::                (v3.3.2)
 
-2025-09-20T12:45:11.758-04:00  INFO 19653 --- [           main] com.care.ride.CareRideApplication        : Starting CareRideApplication using Java 20.0.1 with PID 19653 (/Users/chhabisharma/Documents/Care-ride-solution/care-ride-solutions-backend/target/care-ride-backend-0.0.1.war started by chhabisharma in /Users/chhabisharma/Documents/Care-ride-solution/care-ride-solutions-backend)
-2025-09-20T12:45:11.761-04:00  INFO 19653 --- [           main] com.care.ride.CareRideApplication        : The following 1 profile is active: "local"
-2025-09-20T12:45:12.441-04:00  INFO 19653 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
-2025-09-20T12:45:12.467-04:00  INFO 19653 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 22 ms. Found 3 JPA repository interfaces.
-2025-09-20T12:45:12.906-04:00  INFO 19653 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
-2025-09-20T12:45:12.913-04:00  INFO 19653 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
-2025-09-20T12:45:12.913-04:00  INFO 19653 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.26]
-2025-09-20T12:45:12.959-04:00  INFO 19653 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
-2025-09-20T12:45:12.960-04:00  INFO 19653 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 1149 ms
-2025-09-20T12:45:13.036-04:00  INFO 19653 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
-2025-09-20T12:45:13.131-04:00  INFO 19653 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:caredb user=SA
-2025-09-20T12:45:13.131-04:00  INFO 19653 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
-2025-09-20T12:45:13.138-04:00  INFO 19653 --- [           main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:caredb'
-2025-09-20T12:45:13.262-04:00  INFO 19653 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
-2025-09-20T12:45:13.294-04:00  INFO 19653 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.2.Final
-2025-09-20T12:45:13.312-04:00  INFO 19653 --- [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
-2025-09-20T12:45:13.478-04:00  INFO 19653 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
-2025-09-20T12:45:13.501-04:00  WARN 19653 --- [           main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
-2025-09-20T12:45:13.973-04:00  INFO 19653 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
+2025-09-22T14:26:23.555-04:00  INFO 30390 --- [           main] com.care.ride.CareRideApplication        : Starting CareRideApplication using Java 24.0.2 with PID 30390 (/Users/chhabisharma/Documents/Care-ride-solution/care-ride-solutions-backend/target/classes started by chhabisharma in /Users/chhabisharma/Documents/Care-ride-solution/care-ride-solutions-backend)
+2025-09-22T14:26:23.557-04:00  INFO 30390 --- [           main] com.care.ride.CareRideApplication        : The following 1 profile is active: "local"
+2025-09-22T14:26:23.916-04:00  INFO 30390 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Bootstrapping Spring Data JPA repositories in DEFAULT mode.
+2025-09-22T14:26:23.939-04:00  INFO 30390 --- [           main] .s.d.r.c.RepositoryConfigurationDelegate : Finished Spring Data repository scanning in 20 ms. Found 3 JPA repository interfaces.
+WARNING: A restricted method in java.lang.System has been called
+WARNING: java.lang.System::load has been called by org.apache.tomcat.jni.Library in an unnamed module (file:/Users/chhabisharma/.m2/repository/org/apache/tomcat/embed/tomcat-embed-core/10.1.26/tomcat-embed-core-10.1.26.jar)
+WARNING: Use --enable-native-access=ALL-UNNAMED to avoid a warning for callers in this module
+WARNING: Restricted methods will be blocked in a future release unless native access is enabled
+
+2025-09-22T14:26:24.254-04:00  INFO 30390 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat initialized with port 8080 (http)
+2025-09-22T14:26:24.259-04:00  INFO 30390 --- [           main] o.apache.catalina.core.StandardService   : Starting service [Tomcat]
+2025-09-22T14:26:24.260-04:00  INFO 30390 --- [           main] o.apache.catalina.core.StandardEngine    : Starting Servlet engine: [Apache Tomcat/10.1.26]
+2025-09-22T14:26:24.279-04:00  INFO 30390 --- [           main] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring embedded WebApplicationContext
+2025-09-22T14:26:24.280-04:00  INFO 30390 --- [           main] w.s.c.ServletWebServerApplicationContext : Root WebApplicationContext: initialization completed in 705 ms
+2025-09-22T14:26:24.343-04:00  INFO 30390 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Starting...
+2025-09-22T14:26:24.427-04:00  INFO 30390 --- [           main] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Added connection conn0: url=jdbc:h2:mem:caredb user=SA
+2025-09-22T14:26:24.428-04:00  INFO 30390 --- [           main] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Start completed.
+2025-09-22T14:26:24.434-04:00  INFO 30390 --- [           main] o.s.b.a.h2.H2ConsoleAutoConfiguration    : H2 console available at '/h2-console'. Database available at 'jdbc:h2:mem:caredb'
+2025-09-22T14:26:24.514-04:00  INFO 30390 --- [           main] o.hibernate.jpa.internal.util.LogHelper  : HHH000204: Processing PersistenceUnitInfo [name: default]
+2025-09-22T14:26:24.534-04:00  INFO 30390 --- [           main] org.hibernate.Version                    : HHH000412: Hibernate ORM core version 6.5.2.Final
+2025-09-22T14:26:24.545-04:00  INFO 30390 --- [           main] o.h.c.internal.RegionFactoryInitiator    : HHH000026: Second-level cache disabled
+2025-09-22T14:26:24.653-04:00  INFO 30390 --- [           main] o.s.o.j.p.SpringPersistenceUnitInfo      : No LoadTimeWeaver setup: ignoring JPA class transformer
+2025-09-22T14:26:24.669-04:00  WARN 30390 --- [           main] org.hibernate.orm.deprecation            : HHH90000025: H2Dialect does not need to be specified explicitly using 'hibernate.dialect' (remove the property setting and it will be selected by default)
+2025-09-22T14:26:25.034-04:00  INFO 30390 --- [           main] o.h.e.t.j.p.i.JtaPlatformInitiator       : HHH000489: No JTA platform available (set 'hibernate.transaction.jta.platform' to enable JTA platform integration)
 Hibernate: 
     drop table if exists booking cascade 
 Hibernate: 
@@ -70,16 +109,16 @@ Hibernate:
        add constraint FKjx7gpfq3whfqo33uyhj1ckuiv 
        foreign key (service_type_id) 
        references service_type
-2025-09-20T12:45:13.997-04:00  INFO 19653 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
-2025-09-20T12:45:14.297-04:00  WARN 19653 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
-2025-09-20T12:45:14.331-04:00  INFO 19653 --- [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name userDetailsService
-2025-09-20T12:45:14.593-04:00  INFO 19653 --- [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoints beneath base path '/actuator'
-2025-09-20T12:45:14.866-04:00  INFO 19653 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
-2025-09-20T12:45:14.878-04:00  INFO 19653 --- [           main] com.care.ride.CareRideApplication        : Started CareRideApplication in 3.391 seconds (process running for 3.662)
-2025-09-20T12:45:23.683-04:00  INFO 19653 --- [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
-2025-09-20T12:45:23.683-04:00  INFO 19653 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
-2025-09-20T12:45:23.683-04:00  INFO 19653 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 0 ms
-[contact] inbound payload email=debug@example.com reason=Authentication Test notifyRecipient=contact@careridesolutionspa.com
+2025-09-22T14:26:25.055-04:00  INFO 30390 --- [           main] j.LocalContainerEntityManagerFactoryBean : Initialized JPA EntityManagerFactory for persistence unit 'default'
+2025-09-22T14:26:25.223-04:00  WARN 30390 --- [           main] JpaBaseConfiguration$JpaWebConfiguration : spring.jpa.open-in-view is enabled by default. Therefore, database queries may be performed during view rendering. Explicitly configure spring.jpa.open-in-view to disable this warning
+2025-09-22T14:26:25.247-04:00  INFO 30390 --- [           main] r$InitializeUserDetailsManagerConfigurer : Global AuthenticationManager configured with UserDetailsService bean with name userDetailsService
+2025-09-22T14:26:25.439-04:00  INFO 30390 --- [           main] o.s.b.a.e.web.EndpointLinksResolver      : Exposing 2 endpoints beneath base path '/actuator'
+2025-09-22T14:26:25.641-04:00  INFO 30390 --- [           main] o.s.b.w.embedded.tomcat.TomcatWebServer  : Tomcat started on port 8080 (http) with context path '/'
+2025-09-22T14:26:25.650-04:00  INFO 30390 --- [           main] com.care.ride.CareRideApplication        : Started CareRideApplication in 2.261 seconds (process running for 2.397)
+2025-09-22T14:28:16.511-04:00  INFO 30390 --- [nio-8080-exec-1] o.a.c.c.C.[Tomcat].[localhost].[/]       : Initializing Spring DispatcherServlet 'dispatcherServlet'
+2025-09-22T14:28:16.511-04:00  INFO 30390 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Initializing Servlet 'dispatcherServlet'
+2025-09-22T14:28:16.512-04:00  INFO 30390 --- [nio-8080-exec-1] o.s.web.servlet.DispatcherServlet        : Completed initialization in 1 ms
+[contact] inbound payload email=test@example.com reason=Testing notifyRecipient=contact@careridesolutionspa.com
 Hibernate: 
     insert 
     into
@@ -87,184 +126,37 @@ Hibernate:
         (created_at, email, message, name, phone, reason, id) 
     values
         (?, ?, ?, ?, ?, ?, default)
-[contact] saved id=1 size=146
-2025-09-20T12:46:52.886-04:00  INFO 19653 --- [onPool-worker-1] com.care.ride.service.EmailService       : === EMAIL SEND ATTEMPT ===
-2025-09-20T12:46:52.887-04:00  INFO 19653 --- [onPool-worker-1] com.care.ride.service.EmailService       : From: contact@careridesolutionspa.com
-2025-09-20T12:46:52.887-04:00  INFO 19653 --- [onPool-worker-1] com.care.ride.service.EmailService       : To: contact@careridesolutionspa.com
-2025-09-20T12:46:52.887-04:00  INFO 19653 --- [onPool-worker-1] com.care.ride.service.EmailService       : Subject: New Contact Form Submission: Authentication Test
-2025-09-20T12:46:52.887-04:00  INFO 19653 --- [onPool-worker-1] com.care.ride.service.EmailService       : Host: smtp.office365.com, Port: 587
-2025-09-20T12:46:52.887-04:00  INFO 19653 --- [onPool-worker-1] com.care.ride.service.EmailService       : Password configured: YES
-2025-09-20T12:46:52.887-04:00  INFO 19653 --- [onPool-worker-1] com.care.ride.service.EmailService       : Password length: 17
-2025-09-20T12:46:52.891-04:00  INFO 19653 --- [onPool-worker-1] com.care.ride.service.EmailService       : Trying mail send using host=smtp.office365.com, port=587, ssl=false, starttls=true, label=configured
-2025-09-20T12:46:58.662-04:00 ERROR 19653 --- [onPool-worker-1] com.care.ride.service.EmailService       : ❌ AUTHENTICATION FAILED when sending email via smtp.office365.com:587 - Authentication failed
-2025-09-20T12:46:58.662-04:00 ERROR 19653 --- [onPool-worker-1] com.care.ride.service.EmailService       :    Check MAIL_USERNAME and MAIL_PASSWORD are correct
-2025-09-20T12:46:58.664-04:00  INFO 19653 --- [onPool-worker-1] com.care.ride.service.EmailService       : Trying mail send using host=smtp.office365.com, port=465, ssl=true, starttls=false, label=ssl465
-2025-09-20T12:47:08.668-04:00 ERROR 19653 --- [onPool-worker-1] com.care.ride.service.EmailService       : ❌ FAILED to send email via smtp.office365.com:465 - MailSendException: Mail server connection failed. Failed messages: org.eclipse.angus.mail.util.MailConnectException: Couldn't connect to host, port: smtp.office365.com, 465; timeout 10000;
+[contact] saved id=1 size=83
+2025-09-22T14:29:42.057-04:00  INFO 30390 --- [onPool-worker-1] com.care.ride.service.EmailService       : === EMAIL SEND ATTEMPT ===
+2025-09-22T14:29:42.057-04:00  INFO 30390 --- [onPool-worker-1] com.care.ride.service.EmailService       : From: contact@careridesolutionspa.com
+2025-09-22T14:29:42.057-04:00  INFO 30390 --- [onPool-worker-1] com.care.ride.service.EmailService       : To: contact@careridesolutionspa.com
+2025-09-22T14:29:42.057-04:00  INFO 30390 --- [onPool-worker-1] com.care.ride.service.EmailService       : Subject: New Contact Form Submission: Testing
+2025-09-22T14:29:42.057-04:00  INFO 30390 --- [onPool-worker-1] com.care.ride.service.EmailService       : Host: smtp.office365.com, Port: 587
+2025-09-22T14:29:42.057-04:00  INFO 30390 --- [onPool-worker-1] com.care.ride.service.EmailService       : Password configured: YES
+2025-09-22T14:29:42.057-04:00  INFO 30390 --- [onPool-worker-1] com.care.ride.service.EmailService       : Password length: 17
+2025-09-22T14:29:42.059-04:00  INFO 30390 --- [onPool-worker-1] com.care.ride.service.EmailService       : Trying mail send using host=smtp.office365.com, port=587, ssl=false, starttls=true, label=configured
+2025-09-22T14:29:48.960-04:00 ERROR 30390 --- [onPool-worker-1] com.care.ride.service.EmailService       : ❌ AUTHENTICATION FAILED when sending email via smtp.office365.com:587 - Authentication failed
+2025-09-22T14:29:48.962-04:00 ERROR 30390 --- [onPool-worker-1] com.care.ride.service.EmailService       :    Check MAIL_USERNAME and MAIL_PASSWORD are correct
+2025-09-22T14:29:48.964-04:00  INFO 30390 --- [onPool-worker-1] com.care.ride.service.EmailService       : Trying mail send using host=smtp.office365.com, port=465, ssl=true, starttls=false, label=ssl465
+2025-09-22T14:29:58.969-04:00 ERROR 30390 --- [onPool-worker-1] com.care.ride.service.EmailService       : ❌ FAILED to send email via smtp.office365.com:465 - MailSendException: Mail server connection failed. Failed messages: org.eclipse.angus.mail.util.MailConnectException: Couldn't connect to host, port: smtp.office365.com, 465; timeout 10000;
   nested exception is:
 	java.net.SocketTimeoutException: Connect timed out
-2025-09-20T12:47:08.676-04:00  INFO 19653 --- [onPool-worker-1] com.care.ride.service.EmailService       : Trying mail send using host=smtp.office365.com, port=25, ssl=false, starttls=false, label=plain25
-2025-09-20T12:47:13.807-04:00 ERROR 19653 --- [onPool-worker-1] com.care.ride.service.EmailService       : ❌ FAILED to send email via smtp.office365.com:25 - MailSendException: Failed messages: org.eclipse.angus.mail.smtp.SMTPSendFailedException: 451 5.7.3 STARTTLS is required to send mail [CH2PR07CA0010.namprd07.prod.outlook.com 2025-09-20T16:47:15.174Z 08DDF7DF1AC4D034]
+2025-09-22T14:29:58.971-04:00  INFO 30390 --- [onPool-worker-1] com.care.ride.service.EmailService       : Trying mail send using host=smtp.office365.com, port=25, ssl=false, starttls=false, label=plain25
+2025-09-22T14:30:04.184-04:00 ERROR 30390 --- [onPool-worker-1] com.care.ride.service.EmailService       : ❌ FAILED to send email via smtp.office365.com:25 - MailSendException: Failed messages: org.eclipse.angus.mail.smtp.SMTPSendFailedException: 451 5.7.3 STARTTLS is required to send mail [CH5P220CA0017.NAMP220.PROD.OUTLOOK.COM 2025-09-22T18:30:04.156Z 08DDF9B0CC84AC1D]
 
-2025-09-20T12:47:13.808-04:00 ERROR 19653 --- [onPool-worker-1] com.care.ride.service.EmailService       : ❌ ALL MAIL SEND ATTEMPTS FAILED for subject=New Contact Form Submission: Authentication Test
-2025-09-20T12:47:13.808-04:00 ERROR 19653 --- [onPool-worker-1] com.care.ride.service.EmailService       : 💡 Possible issues:
-2025-09-20T12:47:13.809-04:00 ERROR 19653 --- [onPool-worker-1] com.care.ride.service.EmailService       :    1. Incorrect MAIL_USERNAME or MAIL_PASSWORD
-2025-09-20T12:47:13.809-04:00 ERROR 19653 --- [onPool-worker-1] com.care.ride.service.EmailService       :    2. AWS WorkMail account not activated
-2025-09-20T12:47:13.809-04:00 ERROR 19653 --- [onPool-worker-1] com.care.ride.service.EmailService       :    3. Domain careridesolutionspa.com not verified in AWS WorkMail
-2025-09-20T12:47:13.809-04:00 ERROR 19653 --- [onPool-worker-1] com.care.ride.service.EmailService       :    4. Sending limits exceeded
+2025-09-22T14:30:04.184-04:00 ERROR 30390 --- [onPool-worker-1] com.care.ride.service.EmailService       : ❌ ALL MAIL SEND ATTEMPTS FAILED for subject=New Contact Form Submission: Testing
+2025-09-22T14:30:04.184-04:00 ERROR 30390 --- [onPool-worker-1] com.care.ride.service.EmailService       : 💡 Possible issues:
+2025-09-22T14:30:04.184-04:00 ERROR 30390 --- [onPool-worker-1] com.care.ride.service.EmailService       :    1. Incorrect MAIL_USERNAME or MAIL_PASSWORD
+2025-09-22T14:30:04.184-04:00 ERROR 30390 --- [onPool-worker-1] com.care.ride.service.EmailService       :    2. AWS WorkMail account not activated
+2025-09-22T14:30:04.184-04:00 ERROR 30390 --- [onPool-worker-1] com.care.ride.service.EmailService       :    3. Domain careridesolutionspa.com not verified in AWS WorkMail
+2025-09-22T14:30:04.184-04:00 ERROR 30390 --- [onPool-worker-1] com.care.ride.service.EmailService       :    4. Sending limits exceeded
 [contact] async email result id=1 ok=false
-2025-09-20T13:07:16.220-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=17m2s946ms).
-[contact] inbound payload email=success@example.com reason=SMTP Authentication Fixed notifyRecipient=contact@careridesolutionspa.com
+2025-09-22T14:39:25.103-04:00  INFO 30390 --- [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
 Hibernate: 
-    insert 
-    into
-        contacts
-        (created_at, email, message, name, phone, reason, id) 
-    values
-        (?, ?, ?, ?, ?, ?, default)
-[contact] saved id=2 size=130
-2025-09-20T13:35:01.943-04:00  INFO 19653 --- [onPool-worker-2] com.care.ride.service.EmailService       : === EMAIL SEND ATTEMPT ===
-2025-09-20T13:35:01.943-04:00  INFO 19653 --- [onPool-worker-2] com.care.ride.service.EmailService       : From: contact@careridesolutionspa.com
-2025-09-20T13:35:01.943-04:00  INFO 19653 --- [onPool-worker-2] com.care.ride.service.EmailService       : To: contact@careridesolutionspa.com
-2025-09-20T13:35:01.943-04:00  INFO 19653 --- [onPool-worker-2] com.care.ride.service.EmailService       : Subject: New Contact Form Submission: SMTP Authentication Fixed
-2025-09-20T13:35:01.943-04:00  INFO 19653 --- [onPool-worker-2] com.care.ride.service.EmailService       : Host: smtp.office365.com, Port: 587
-2025-09-20T13:35:01.943-04:00  INFO 19653 --- [onPool-worker-2] com.care.ride.service.EmailService       : Password configured: YES
-2025-09-20T13:35:01.943-04:00  INFO 19653 --- [onPool-worker-2] com.care.ride.service.EmailService       : Password length: 17
-2025-09-20T13:35:01.947-04:00  INFO 19653 --- [onPool-worker-2] com.care.ride.service.EmailService       : Trying mail send using host=smtp.office365.com, port=587, ssl=false, starttls=true, label=configured
-2025-09-20T13:35:06.828-04:00  INFO 19653 --- [onPool-worker-2] com.care.ride.service.EmailService       : ✅ SUCCESS: Email sent to contact@careridesolutionspa.com (subject=New Contact Form Submission: SMTP Authentication Fixed) via smtp.office365.com:587
-[contact] async email result id=2 ok=true
-[contact] inbound payload email=hhjgjhg reason=hghjgj notifyRecipient=contact@careridesolutionspa.com
+    drop table if exists booking cascade 
 Hibernate: 
-    insert 
-    into
-        contacts
-        (created_at, email, message, name, phone, reason, id) 
-    values
-        (?, ?, ?, ?, ?, ?, default)
-[contact] saved id=3 size=19
-2025-09-20T13:37:05.894-04:00  INFO 19653 --- [onPool-worker-3] com.care.ride.service.EmailService       : === EMAIL SEND ATTEMPT ===
-2025-09-20T13:37:05.895-04:00  INFO 19653 --- [onPool-worker-3] com.care.ride.service.EmailService       : From: contact@careridesolutionspa.com
-2025-09-20T13:37:05.895-04:00  INFO 19653 --- [onPool-worker-3] com.care.ride.service.EmailService       : To: contact@careridesolutionspa.com
-2025-09-20T13:37:05.895-04:00  INFO 19653 --- [onPool-worker-3] com.care.ride.service.EmailService       : Subject: New Contact Form Submission: hghjgj
-2025-09-20T13:37:05.895-04:00  INFO 19653 --- [onPool-worker-3] com.care.ride.service.EmailService       : Host: smtp.office365.com, Port: 587
-2025-09-20T13:37:05.895-04:00  INFO 19653 --- [onPool-worker-3] com.care.ride.service.EmailService       : Password configured: YES
-2025-09-20T13:37:05.895-04:00  INFO 19653 --- [onPool-worker-3] com.care.ride.service.EmailService       : Password length: 17
-2025-09-20T13:37:05.898-04:00  INFO 19653 --- [onPool-worker-3] com.care.ride.service.EmailService       : Trying mail send using host=smtp.office365.com, port=587, ssl=false, starttls=true, label=configured
-2025-09-20T13:37:07.811-04:00  INFO 19653 --- [onPool-worker-3] com.care.ride.service.EmailService       : ✅ SUCCESS: Email sent to contact@careridesolutionspa.com (subject=New Contact Form Submission: hghjgj) via smtp.office365.com:587
-[contact] async email result id=3 ok=true
-2025-09-20T15:08:46.414-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=3m45s500ms).
-2025-09-20T15:34:44.694-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m28s176ms).
-2025-09-20T15:50:42.689-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m27s986ms).
-2025-09-20T16:06:10.673-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m27s983ms).
-2025-09-20T16:21:42.953-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=14m32s314ms).
-2025-09-20T16:37:12.087-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m29s134ms).
-2025-09-20T16:55:40.560-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m28s418ms).
-2025-09-20T19:14:10.441-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m28s520ms).
-2025-09-20T20:30:09.222-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m28s74ms).
-2025-09-20T20:45:54.677-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m15s433ms).
-2025-09-20T22:57:16.749-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=4m21s161ms).
-2025-09-20T23:06:37.659-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m20s911ms).
-2025-09-20T23:07:25.092-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=47s432ms).
-2025-09-20T23:35:02.203-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=17m37s25ms).
-2025-09-20T23:51:00.324-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m28s115ms).
-2025-09-21T00:03:58.954-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=12m28s626ms).
-2025-09-21T00:13:27.638-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m28s683ms).
-2025-09-21T00:21:26.279-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=7m28s635ms).
-2025-09-21T01:38:09.012-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=16m41s987ms).
-2025-09-21T01:55:41.001-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=16m31s997ms).
-2025-09-21T02:13:04.965-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=17m23s965ms).
-2025-09-21T03:28:14.608-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m39s47ms).
-2025-09-21T03:33:43.830-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=4m59s188ms).
-2025-09-21T03:50:02.594-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=16m18s765ms).
-2025-09-21T04:07:01.740-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m59s137ms).
-2025-09-21T04:23:51.724-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=16m49s984ms).
-2025-09-21T04:41:01.722-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=16m39s988ms).
-2025-09-21T04:59:15.701-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=18m13s978ms).
-2025-09-21T05:10:26.865-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=10m11s152ms).
-2025-09-21T05:14:29.441-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m32s547ms).
-2025-09-21T05:30:49.557-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m50s106ms).
-2025-09-21T05:47:09.478-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=16m19s921ms).
-2025-09-21T06:09:59.808-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=17m20s266ms).
-2025-09-21T07:28:42.173-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=18m11s681ms).
-2025-09-21T07:46:15.126-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=17m32s953ms).
-2025-09-21T08:02:17.367-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m32s247ms).
-2025-09-21T09:11:20.320-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m2s311ms).
-2025-09-21T09:27:30.596-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=16m10s276ms).
-2025-09-21T09:44:49.598-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=16m48s996ms).
-2025-09-21T10:50:35.603-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=25m45s531ms).
-2025-09-21T10:52:20.373-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m44s771ms).
-2025-09-21T10:53:22.866-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m2s493ms).
-2025-09-21T11:00:22.830-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=5m29s950ms).
-2025-09-21T11:15:51.580-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m28s750ms).
-2025-09-21T11:31:50.296-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m28s698ms).
-2025-09-21T11:47:18.976-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m28s680ms).
-2025-09-21T12:03:47.258-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m28s249ms).
-2025-09-21T12:19:16.222-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m28s963ms).
-2025-09-21T12:35:15.183-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m28s952ms).
-2025-09-21T12:50:44.078-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m28s894ms).
-2025-09-21T12:53:27.834-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2m13s731ms).
-2025-09-21T13:10:49.066-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=17m21s231ms).
-2025-09-21T13:28:18.025-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=16m58s960ms).
-2025-09-21T13:33:01.998-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=4m43s974ms).
-2025-09-21T13:49:08.128-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m36s122ms).
-2025-09-21T14:55:11.374-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=5m32s534ms).
-2025-09-21T15:11:10.953-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m59s579ms).
-2025-09-21T15:12:44.612-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m3s667ms).
-2025-09-21T15:28:54.267-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=16m9s655ms).
-2025-09-21T16:38:24.736-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=8m59s808ms).
-2025-09-21T16:41:41.756-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2m47s9ms).
-2025-09-21T16:42:48.131-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m6s375ms).
-2025-09-21T16:44:21.044-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m2s907ms).
-2025-09-21T16:55:56.102-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=11m35s58ms).
-2025-09-21T17:00:25.743-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=3m59s606ms).
-2025-09-21T17:16:30.456-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m34s701ms).
-2025-09-21T18:32:33.427-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=16m2s206ms).
-2025-09-21T19:49:45.442-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=17m11s311ms).
-2025-09-21T19:56:57.898-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=6m42s450ms).
-2025-09-21T20:13:48.479-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=16m20s577ms).
-2025-09-21T21:29:03.726-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m44s661ms).
-2025-09-21T21:45:28.609-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m54s853ms).
-2025-09-21T21:58:11.528-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=12m12s912ms).
-2025-09-21T23:15:19.505-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=16m7s329ms).
-2025-09-21T23:17:39.483-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2m19s978ms).
-2025-09-21T23:25:44.571-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=7m35s86ms).
-2025-09-21T23:42:46.344-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=16m31s771ms).
-2025-09-22T00:59:33.036-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m45s983ms).
-2025-09-22T01:11:55.605-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=11m52s466ms).
-2025-09-22T01:13:45.066-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m19s454ms).
-2025-09-22T02:30:13.186-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m57s454ms).
-2025-09-22T02:46:41.133-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m57s973ms).
-2025-09-22T03:03:00.656-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m49s517ms).
-2025-09-22T04:18:46.833-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m45s531ms).
-2025-09-22T04:34:48.819-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m31s994ms).
-2025-09-22T04:53:16.936-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=17m58s103ms).
-2025-09-22T05:09:54.589-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=16m37s654ms).
-2025-09-22T05:27:27.209-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=17m2s636ms).
-2025-09-22T05:44:53.162-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=16m55s938ms).
-2025-09-22T05:54:42.521-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=9m19s353ms).
-2025-09-22T06:19:17.494-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=16m34s896ms).
-2025-09-22T06:35:18.449-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m30s959ms).
-2025-09-22T06:52:40.402-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=17m21s953ms).
-2025-09-22T06:55:33.384-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2m22s979ms).
-2025-09-22T07:12:42.024-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=16m38s637ms).
-2025-09-22T07:28:25.020-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m42s996ms).
-2025-09-22T07:48:00.618-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=16m35s556ms).
-2025-09-22T07:56:32.602-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=8m1s997ms).
-2025-09-22T08:13:26.606-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=16m23s997ms).
-2025-09-22T08:29:11.574-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=15m44s968ms).
-2025-09-22T09:36:18.927-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=7m6s699ms).
-2025-09-22T09:40:07.771-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=3m48s844ms).
-2025-09-22T09:48:32.141-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=7m54s359ms).
-2025-09-22T09:49:24.532-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=52s391ms).
-2025-09-22T09:51:42.498-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m47s958ms).
-2025-09-22T09:57:47.478-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=5m34s993ms).
-2025-09-22T10:05:05.994-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=7m18s516ms).
-2025-09-22T10:18:29.272-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=12m53s266ms).
-2025-09-22T10:22:11.881-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=3m42s609ms).
-2025-09-22T10:24:43.515-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2m1s631ms).
-2025-09-22T10:25:44.388-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m874ms).
-2025-09-22T10:28:12.341-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m57s945ms).
-2025-09-22T10:29:45.318-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m2s966ms).
-2025-09-22T10:31:37.124-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1m51s806ms).
-2025-09-22T10:37:03.459-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=4m14s709ms).
-2025-09-22T10:39:38.444-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=2m4s976ms).
-2025-09-22T10:51:45.235-04:00  WARN 19653 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=12m6s792ms).
+    drop table if exists contacts cascade 
+Hibernate: 
+    drop table if exists service_type cascade 
+2025-09-22T14:39:25.106-04:00  INFO 30390 --- [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-09-22T14:39:25.108-04:00  INFO 30390 --- [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
