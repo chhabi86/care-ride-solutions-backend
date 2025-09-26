@@ -70,6 +70,18 @@ ls -1 /var/www/care-ride-frontend | head
 curl http://localhost/api/services
 ```
 
+## Email Delivery (Production)
+- Primary: SMTP if configured locally (Office365/WorkMail).
+- Fallback: AWS SES HTTP API (bypasses SMTP port blocks on hosting providers like DigitalOcean).
+
+Environment variables consumed:
+- MAIL_HOST, MAIL_PORT, MAIL_USERNAME, MAIL_PASSWORD, MAIL_FROM
+- AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_REGION, AWS_SES_FROM_EMAIL
+
+Diagnostics in production:
+- curl http(s)://<domain>/api/debug/smtp
+- curl http(s)://<domain>/api/debug/ses
+
 ## Next Ideas
 - Cache node_modules for faster frontend builds
 - Add actuator health endpoint

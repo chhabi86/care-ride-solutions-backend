@@ -2,26 +2,16 @@
 
 This file is used to trigger GitHub Actions deployments.
 
-Last deployment trigger: 2025-09-25 11:20:00 UTC - SES credential sanitization rollout
-- SendGrid HTTP API added as final email fallback
-- Triple fallback system: SMTP → SES → SendGrid
-- Added /api/debug/sendgrid endpoint
-- Maximum email delivery reliability
+Last deployment trigger: 2025-09-26 00:00:00 UTC - Cleanup for SES-only email delivery
 
-## SendGrid HTTP API Integration
+We removed all SendGrid code and references. Email delivery path is now:
+1. SMTP (if configured locally)
+2. AWS SES HTTP API (production fallback; preferred in DO where SMTP is blocked)
 
-**Email Fallback Chain:**
-1. **SMTP** (WorkMail/Office365) - Multiple port attempts (587/465/25)
-2. **AWS SES HTTP API** - Bypasses SMTP port blocking
-3. **SendGrid HTTP API** - Final fallback with excellent deliverability
+Debug endpoints:
+- /api/debug/smtp
+- /api/debug/ses
 
-**New Features:**
-- SendGridService with HTTP API integration
-- Updated EmailService with SendGrid fallback
-- New debug endpoint: `/api/debug/sendgrid`
-- Environment variable: `SENDGRID_API_KEY`
-
-**Dependencies Added:**
-- SendGrid Java SDK (com.sendgrid:sendgrid-java:4.10.2)
-
-This ensures email delivery success even if both SMTP and AWS SES fail.
+Environment variables used in production:
+- MAIL_HOST, MAIL_PORT, MAIL_USERNAME, MAIL_PASSWORD, MAIL_FROM
+- AWS_ACCESS_KEY_ID, AWS_SECRET_ACCESS_KEY, AWS_REGION, AWS_SES_FROM_EMAIL

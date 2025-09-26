@@ -156,3 +156,54 @@ Hibernate:
 2025-09-24T15:04:36.135-04:00  INFO 36277 --- [onPool-worker-1] com.care.ride.service.EmailService       : Trying mail send using host=smtp.office365.com, port=587, ssl=false, starttls=true, label=configured
 2025-09-24T15:04:38.128-04:00  INFO 36277 --- [onPool-worker-1] com.care.ride.service.EmailService       : ✅ SUCCESS: Email sent to contact@careridesolutionspa.com (subject=New Contact Form Submission: Force SES) via smtp.office365.com:587
 [contact] async email result id=2 ok=true
+2025-09-24T17:52:32.722-04:00  WARN 36277 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=18m25s93ms).
+2025-09-24T18:57:34.590-04:00  WARN 36277 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1h5m1s867ms).
+2025-09-24T19:30:32.868-04:00  WARN 36277 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=32m58s279ms).
+2025-09-24T20:02:18.491-04:00  WARN 36277 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=31m45s622ms).
+2025-09-24T20:20:01.631-04:00  WARN 36277 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=17m43s141ms).
+2025-09-24T21:09:38.253-04:00  WARN 36277 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=49m36s622ms).
+2025-09-24T21:37:07.231-04:00  WARN 36277 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=27m28s978ms).
+2025-09-24T22:10:58.891-04:00  WARN 36277 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=33m51s660ms).
+2025-09-24T23:18:31.885-04:00  WARN 36277 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1h7m32s994ms).
+2025-09-24T23:36:54.713-04:00  WARN 36277 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=18m22s828ms).
+2025-09-25T00:25:26.762-04:00  WARN 36277 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=48m32s49ms).
+2025-09-25T01:00:24.019-04:00  WARN 36277 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=34m57s256ms).
+2025-09-25T01:32:49.485-04:00  WARN 36277 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=32m25s467ms).
+2025-09-25T02:04:14.502-04:00  WARN 36277 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=31m25s17ms).
+2025-09-25T02:37:32.941-04:00  WARN 36277 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=33m18s439ms).
+2025-09-25T03:25:43.811-04:00  WARN 36277 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=48m10s870ms).
+2025-09-25T03:42:45.518-04:00  WARN 36277 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=17m1s706ms).
+2025-09-25T04:48:58.191-04:00  WARN 36277 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=1h6m12s674ms).
+2025-09-25T05:06:44.612-04:00  WARN 36277 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=17m46s421ms).
+2025-09-25T06:00:35.906-04:00  WARN 36277 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=53m51s294ms).
+2025-09-25T06:18:55.720-04:00  WARN 36277 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=18m19s814ms).
+2025-09-25T06:31:32.709-04:00  WARN 36277 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=12m36s989ms).
+2025-09-25T06:39:56.605-04:00  WARN 36277 --- [l-1 housekeeper] com.zaxxer.hikari.pool.HikariPool        : HikariPool-1 - Thread starvation or clock leap detected (housekeeper delta=6m23s880ms).
+[contact] inbound payload email=test@example.com reason=Test Enhanced SES notifyRecipient=contact@careridesolutionspa.com
+Hibernate: 
+    insert 
+    into
+        contacts
+        (created_at, email, message, name, phone, reason, id) 
+    values
+        (?, ?, ?, ?, ?, ?, default)
+[contact] saved id=3 size=62
+2025-09-25T06:42:44.429-04:00  INFO 36277 --- [onPool-worker-2] com.care.ride.service.EmailService       : === EMAIL SEND ATTEMPT ===
+2025-09-25T06:42:44.429-04:00  INFO 36277 --- [onPool-worker-2] com.care.ride.service.EmailService       : From: contact@careridesolutionspa.com
+2025-09-25T06:42:44.429-04:00  INFO 36277 --- [onPool-worker-2] com.care.ride.service.EmailService       : To: contact@careridesolutionspa.com
+2025-09-25T06:42:44.429-04:00  INFO 36277 --- [onPool-worker-2] com.care.ride.service.EmailService       : Subject: New Contact Form Submission: Test Enhanced SES
+2025-09-25T06:42:44.429-04:00  INFO 36277 --- [onPool-worker-2] com.care.ride.service.EmailService       : Host: smtp.office365.com, Port: 587
+2025-09-25T06:42:44.429-04:00  INFO 36277 --- [onPool-worker-2] com.care.ride.service.EmailService       : Password configured: YES
+2025-09-25T06:42:44.429-04:00  INFO 36277 --- [onPool-worker-2] com.care.ride.service.EmailService       : Password length: 17
+2025-09-25T06:42:44.432-04:00  INFO 36277 --- [onPool-worker-2] com.care.ride.service.EmailService       : Trying mail send using host=smtp.office365.com, port=587, ssl=false, starttls=true, label=configured
+2025-09-25T06:42:46.629-04:00  INFO 36277 --- [onPool-worker-2] com.care.ride.service.EmailService       : ✅ SUCCESS: Email sent to contact@careridesolutionspa.com (subject=New Contact Form Submission: Test Enhanced SES) via smtp.office365.com:587
+[contact] async email result id=3 ok=true
+2025-09-25T06:45:04.441-04:00  INFO 36277 --- [ionShutdownHook] j.LocalContainerEntityManagerFactoryBean : Closing JPA EntityManagerFactory for persistence unit 'default'
+Hibernate: 
+    drop table if exists booking cascade 
+Hibernate: 
+    drop table if exists contacts cascade 
+Hibernate: 
+    drop table if exists service_type cascade 
+2025-09-25T06:45:04.444-04:00  INFO 36277 --- [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown initiated...
+2025-09-25T06:45:04.445-04:00  INFO 36277 --- [ionShutdownHook] com.zaxxer.hikari.HikariDataSource       : HikariPool-1 - Shutdown completed.
