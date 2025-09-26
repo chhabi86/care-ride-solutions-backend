@@ -82,6 +82,12 @@ Diagnostics in production:
 - curl http(s)://<domain>/api/debug/smtp
 - curl http(s)://<domain>/api/debug/ses
 
+## AWS Deployment
+We provide AWS ECS Fargate deployment via GitHub Actions.
+
+- See `deploy/aws/README.md` for required AWS resources and secrets
+- Workflow: `.github/workflows/aws-ecs-deploy.yml` (trigger via Actions → "backend: deploy to AWS ECS")
+
 ## Next Ideas
 - Cache node_modules for faster frontend builds
 - Add actuator health endpoint
