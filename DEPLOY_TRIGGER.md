@@ -2,7 +2,7 @@
 
 This file is used to trigger GitHub Actions deployments.
 
-Last deployment trigger: 2025-09-24 20:52:00 - SendGrid Integration Deployment 
+Last deployment trigger: 2025-09-25 11:20:00 UTC - SES credential sanitization rollout
 - SendGrid HTTP API added as final email fallback
 - Triple fallback system: SMTP → SES → SendGrid
 - Added /api/debug/sendgrid endpoint

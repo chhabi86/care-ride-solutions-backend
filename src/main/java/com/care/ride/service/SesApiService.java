@@ -48,7 +48,9 @@ public class SesApiService {
             
             if (awsAccessKeyId != null && awsSecretAccessKey != null) {
                 log.info("Using explicit AWS credentials from configuration");
-                AwsBasicCredentials awsCredentials = AwsBasicCredentials.create(awsAccessKeyId, awsSecretAccessKey);
+                String keyId = sanitize(awsAccessKeyId);
+                String secret = sanitize(awsSecretAccessKey);
+                AwsBasicCredentials awsCredentials = AwsBasicCredentials.create(keyId, secret);
                 sesClient = SesClient.builder()
                     .region(Region.of(awsRegion))
                     .credentialsProvider(StaticCredentialsProvider.create(awsCredentials))
@@ -123,7 +125,9 @@ public class SesApiService {
             
             if (awsAccessKeyId != null && awsSecretAccessKey != null) {
                 log.info("Testing with explicit AWS credentials from configuration");
-                AwsBasicCredentials awsCredentials = AwsBasicCredentials.create(awsAccessKeyId, awsSecretAccessKey);
+                String keyId = sanitize(awsAccessKeyId);
+                String secret = sanitize(awsSecretAccessKey);
+                AwsBasicCredentials awsCredentials = AwsBasicCredentials.create(keyId, secret);
                 sesClient = SesClient.builder()
                     .region(Region.of(awsRegion))
                     .credentialsProvider(StaticCredentialsProvider.create(awsCredentials))
@@ -160,5 +164,18 @@ public class SesApiService {
         
         result.put("timestamp", java.time.Instant.now().toString());
         return result;
+    }
+
+    /**
+     * Remove surrounding quotes (single or double) and trim whitespace.
+     * This helps if credentials were saved like 'SECRET' in env files.
+     */
+    private String sanitize(String value) {
+        if (value == null) return null;
+        String v = value.trim();
+        if ((v.startsWith("\"") && v.endsWith("\"")) || (v.startsWith("'") && v.endsWith("'"))) {
+            v = v.substring(1, v.length() - 1);
+        }
+        return v;
     }
 }
