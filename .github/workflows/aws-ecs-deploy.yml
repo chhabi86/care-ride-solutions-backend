@@ -109,4 +109,26 @@ jobs:
           task-definition: ${{ steps.render.outputs.task-definition }}
           service: ${{ secrets.ECS_SERVICE }}
           cluster: ${{ secrets.ECS_CLUSTER }}
-          wait-for-service-stability: true
+          wait-for-service-stability: false
+
+      - name: Tail ECS service events (8 min)
+        env:
+          CLUSTER: ${{ secrets.ECS_CLUSTER }}
+          SERVICE: ${{ secrets.ECS_SERVICE }}
+        run: |
+          set -e
+          end=$((SECONDS+480))
+          while [ $SECONDS -lt $end ]; do
+            echo "--- Service status ---"
+            aws ecs describe-services --cluster "$CLUSTER" --services "$SERVICE" \
+              --query 'services[0].{desired:desiredCount,running:runningCount,status:status,events:events[0:5]}' --output table || true
+            echo "--- Recent stopped tasks ---"
+            TASKS=$(aws ecs list-tasks --cluster "$CLUSTER" --service-name "$SERVICE" --desired-status STOPPED --max-items 5 --query 'taskArns' --output text || true)
+            if [ -n "$TASKS" ]; then
+              aws ecs describe-tasks --cluster "$CLUSTER" --tasks $TASKS \
+                --query 'tasks[].{stoppedReason:stoppedReason,lastStatus:lastStatus,containers:containers[].reason}' --output table || true
+            else
+              echo "No stopped tasks"
+            fi
+            sleep 15
+          done
