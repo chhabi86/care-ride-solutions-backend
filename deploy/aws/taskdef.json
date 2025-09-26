@@ -27,15 +27,14 @@
         { "name": "SPRING_DATASOURCE_PASSWORD", "valueFrom": "arn:aws:ssm:us-east-1:726591790830:parameter/SPRING_DATASOURCE_PASSWORD" },
         { "name": "JWT_SECRET", "valueFrom": "arn:aws:ssm:us-east-1:726591790830:parameter/JWT_SECRET" }
       ],
-      "logConfiguration": {
+  "logConfiguration": {
         "logDriver": "awslogs",
         "options": {
           "awslogs-group": "/ecs/care-ride-backend",
           "awslogs-region": "us-east-1",
           "awslogs-stream-prefix": "ecs"
         }
-      },
-  "healthCheck": null
+  }
     }
   ]
 }
