@@ -4,7 +4,7 @@ This repo includes a workflow to build a Docker image, push to Amazon ECR, and d
 
 ## Prereqs you provide
 - AWS Account ID (e.g., 726591790830) and region us-east-1
-- ECR repository name for backend (e.g., care-ride-backend)
+- ECR repository name for backend (care-ride-backend)
 - ECS Cluster and Service names
 - VPC subnets + a security group for the service (or use default VPC)
 - SSM Parameter Store names for:
@@ -93,11 +93,32 @@ Replace ACCOUNT_ID with your AWS Account ID.
 
 ## Configure GitHub Secrets
 In this repo → Settings → Secrets and variables → Actions:
-- AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY (for GitHub Action to deploy)
+- Option A (recommended): AWS_ROLE_TO_ASSUME = arn:aws:iam::<ACCOUNT_ID>:role/GitHubOIDCDeployRole
+  - Grant this role permissions for ECR, ECS, logs. Trust policy must allow GitHub OIDC provider with your org/repo and workflow.
+- Option B: AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY (for GitHub Action to deploy)
 - AWS_REGION = us-east-1
-- ECR_REPOSITORY = care-ride-solutions
+- ECR_REPOSITORY = care-ride-backend
 - ECS_CLUSTER = care-ride-solutions-cluster
-- ECS_SERVICE = care-ride-solutions
+- ECS_SERVICE = care-ride-backend-svc
+
+Example trust policy for Option A (replace ORG/REPO):
+
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Principal": { "Federated": "arn:aws:iam::<ACCOUNT_ID>:oidc-provider/token.actions.githubusercontent.com" },
+      "Action": "sts:AssumeRoleWithWebIdentity",
+      "Condition": {
+        "StringEquals": {
+          "token.actions.githubusercontent.com:aud": "sts.amazonaws.com",
+          "token.actions.githubusercontent.com:sub": "repo:ORG/REPO:ref:refs/heads/main"
+        }
+      }
+    }
+  ]
+}
 
 ## Task definition
 Edit deploy/aws/taskdef.json:

@@ -24,6 +24,7 @@ concurrency:
 
 permissions:
   contents: read
+  id-token: write
 
 jobs:
   deploy:
@@ -41,7 +42,37 @@ jobs:
       - name: Build backend (skip tests)
         run: mvn -q -DskipTests package
 
-      - name: Configure AWS credentials
+      - name: Validate required inputs
+        env:
+          HAS_ROLE: ${{ secrets.AWS_ROLE_TO_ASSUME != '' }}
+          HAS_KEYS: ${{ secrets.AWS_ACCESS_KEY_ID != '' && secrets.AWS_SECRET_ACCESS_KEY != '' }}
+          AWS_REGION: ${{ env.AWS_REGION }}
+          ECR_REPOSITORY: ${{ secrets.ECR_REPOSITORY }}
+          ECS_CLUSTER: ${{ secrets.ECS_CLUSTER }}
+          ECS_SERVICE: ${{ secrets.ECS_SERVICE }}
+        run: |
+          set -e
+          if [ "$HAS_ROLE" != "true" ] && [ "$HAS_KEYS" != "true" ]; then
+            echo "::error::Missing AWS auth: set AWS_ROLE_TO_ASSUME (preferred) or AWS_ACCESS_KEY_ID/AWS_SECRET_ACCESS_KEY."
+            exit 1
+          fi
+          for var in AWS_REGION ECR_REPOSITORY ECS_CLUSTER ECS_SERVICE; do
+            if [ -z "${!var}" ]; then
+              echo "::error::Missing required input: $var"
+              exit 1
+            fi
+          done
+
+      # Prefer GitHub OIDC to assume a role if provided; fall back to static keys
+      - name: Configure AWS credentials (OIDC)
+        if: ${{ secrets.AWS_ROLE_TO_ASSUME != '' }}
+        uses: aws-actions/configure-aws-credentials@v4
+        with:
+          role-to-assume: ${{ secrets.AWS_ROLE_TO_ASSUME }}
+          aws-region: ${{ env.AWS_REGION }}
+
+      - name: Configure AWS credentials (access keys)
+        if: ${{ secrets.AWS_ROLE_TO_ASSUME == '' }}
         uses: aws-actions/configure-aws-credentials@v4
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
