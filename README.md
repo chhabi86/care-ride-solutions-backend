@@ -145,3 +145,4 @@ Use this checklist when switching production traffic to AWS hosting.
 	- Contact form sends email via SES
 
 # Trigger backend deployment
+# Force deployment with updated infrastructure Wed Oct  1 07:45:27 EDT 2025
