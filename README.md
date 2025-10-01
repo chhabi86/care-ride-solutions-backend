@@ -93,3 +93,55 @@ We provide AWS ECS Fargate deployment via GitHub Actions.
 - Add actuator health endpoint
 - Proper JWT auth & security hardening
 
+
+## Go-live checklist (AWS Frontend + API)
+
+Use this checklist when switching production traffic to AWS hosting.
+
+- CloudFront (frontend)
+	- Alternate domain: careridesolutionspa.com attached, ACM cert in us-east-1
+	- Origin Access Control (OAC) attached to S3 origin
+	- Error responses (SPA routing): 403 → 200 /index.html, 404 → 200 /index.html, TTL 0
+
+- S3 bucket (care-ride-frontend)
+	- Block public access: ON
+	- Bucket policy allows only CloudFront OAC
+
+	Example policy (replace Distribution ID if changed):
+
+	```json
+	{
+		"Version": "2012-10-17",
+		"Statement": [
+			{
+				"Sid": "AllowCloudFrontAccessOnly",
+				"Effect": "Allow",
+				"Principal": { "Service": "cloudfront.amazonaws.com" },
+				"Action": "s3:GetObject",
+				"Resource": "arn:aws:s3:::care-ride-frontend/*",
+				"Condition": {
+					"StringEquals": {
+						"AWS:SourceArn": "arn:aws:cloudfront::726591790830:distribution/E1JZLO2VIYSVJ7"
+					}
+				}
+			}
+		]
+	}
+	```
+
+- Route53 (DNS)
+	- Apex careridesolutionspa.com → Alias A/AAAA to CloudFront distribution
+	- api.careridesolutionspa.com → Alias A/AAAA to your ALB (fronting ECS, port 443). Remove any placeholder A record IPs.
+
+- Backend IAM (ECS task execution)
+	- ssm:GetParameter(s) for /SPRING_DATASOURCE_URL, /SPRING_DATASOURCE_USERNAME, /SPRING_DATASOURCE_PASSWORD, /JWT_SECRET
+	- kms:Decrypt if using SecureString parameters
+
+- Smoke tests
+	- https://careridesolutionspa.com returns 200 (no 403)
+	- https://api.careridesolutionspa.com/api/ping returns OK
+	- https://api.careridesolutionspa.com/api/services returns JSON
+	- /api/debug/ses shows credentials loaded
+	- Contact form sends email via SES
+
+# Trigger backend deployment
