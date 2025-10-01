@@ -12,7 +12,7 @@ RUN mvn -B -DskipTests package
 # Stage 2: runtime image
 FROM eclipse-temurin:17-jre
 WORKDIR /app
-# copy jar produced by maven (uses wildcard to match versioned jar)
-COPY --from=builder /build/target/*-backend-*.jar app.jar
+# copy war produced by maven (Spring Boot WAR can be run with java -jar)
+COPY --from=builder /build/target/*.war app.jar
 EXPOSE 8080
 ENTRYPOINT ["java","-jar","/app/app.jar"]
