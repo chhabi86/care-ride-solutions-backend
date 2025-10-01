@@ -8,6 +8,7 @@
   <version>0.0.1-SNAPSHOT</version>
   <packaging>war</packaging>
   <!-- SES HTTP API Integration - Production Ready -->
+  <!-- Trigger deployment: Updated Oct 1, 2025 for ECS deployment -->
   <properties>
     <java.version>17</java.version>
     <spring-boot.version>3.3.2</spring-boot.version>
