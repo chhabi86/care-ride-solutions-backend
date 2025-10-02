@@ -1,5 +1,6 @@
 com/care/ride/dto/BookingRequest.class
 com/care/ride/dto/ContactRequest.class
+com/care/ride/web/RootController.class
 com/care/ride/web/PublicController.class
 com/care/ride/domain/Booking.class
 com/care/ride/repo/ContactRepo.class
@@ -9,6 +10,7 @@ com/care/ride/repo/BookingRepo.class
 com/care/ride/service/EmailService$Attempt.class
 com/care/ride/config/MailConfig.class
 com/care/ride/controller/DebugController.class
+com/care/ride/config/CorsConfig.class
 com/care/ride/web/DebugMailController.class
 com/care/ride/domain/ServiceType.class
 com/care/ride/config/SecurityConfig.class

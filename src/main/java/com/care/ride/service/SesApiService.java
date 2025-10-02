@@ -118,17 +118,12 @@ public class SesApiService {
         result.put("service", "Amazon SES HTTP API");
         result.put("region", awsRegion);
         result.put("fromEmail", fromEmail);
-        // Diagnostics (no secrets exposed)
-        boolean hasPropKey = awsAccessKeyId != null && !awsAccessKeyId.isBlank();
-        boolean hasPropSecret = awsSecretAccessKey != null && !awsSecretAccessKey.isBlank();
-        result.put("hasPropAccessKeyId", hasPropKey);
-        result.put("hasPropSecretKey", hasPropSecret);
         
         try {
             // Create SES client with explicit credentials if available
             SesClient sesClient;
             
-            if (hasPropKey && hasPropSecret) {
+            if (awsAccessKeyId != null && awsSecretAccessKey != null) {
                 log.info("Testing with explicit AWS credentials from configuration");
                 String keyId = sanitize(awsAccessKeyId);
                 String secret = sanitize(awsSecretAccessKey);
@@ -137,14 +132,12 @@ public class SesApiService {
                     .region(Region.of(awsRegion))
                     .credentialsProvider(StaticCredentialsProvider.create(awsCredentials))
                     .build();
-                result.put("credsSource", "explicit-properties");
             } else {
                 log.info("Testing with AWS credentials from environment variables");
                 sesClient = SesClient.builder()
                     .region(Region.of(awsRegion))
                     .credentialsProvider(EnvironmentVariableCredentialsProvider.create())
                     .build();
-                result.put("credsSource", "environment");
             }
             
             // Try to get account send quota (requires minimal permissions)

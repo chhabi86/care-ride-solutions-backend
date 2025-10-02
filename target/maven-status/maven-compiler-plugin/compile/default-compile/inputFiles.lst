@@ -1,6 +1,7 @@
 /Users/chhabisharma/Documents/Care-ride-solution/care-ride-solutions-backend/src/main/java/com/care/ride/config/DevDataLoader.java
 /Users/chhabisharma/Documents/Care-ride-solution/care-ride-solutions-backend/src/main/java/com/care/ride/web/DebugMailController.java
 /Users/chhabisharma/Documents/Care-ride-solution/care-ride-solutions-backend/src/main/java/com/care/ride/repo/BookingRepo.java
+/Users/chhabisharma/Documents/Care-ride-solution/care-ride-solutions-backend/src/main/java/com/care/ride/config/CorsConfig.java
 /Users/chhabisharma/Documents/Care-ride-solution/care-ride-solutions-backend/src/main/java/com/care/ride/ServletInitializer.java
 /Users/chhabisharma/Documents/Care-ride-solution/care-ride-solutions-backend/src/main/java/com/care/ride/CareRideApplication.java
 /Users/chhabisharma/Documents/Care-ride-solution/care-ride-solutions-backend/src/main/java/com/care/ride/dto/BookingRequest.java
@@ -14,7 +15,6 @@
 /Users/chhabisharma/Documents/Care-ride-solution/care-ride-solutions-backend/src/main/java/com/care/ride/domain/Booking.java
 /Users/chhabisharma/Documents/Care-ride-solution/care-ride-solutions-backend/src/main/java/com/care/ride/domain/Contact.java
 /Users/chhabisharma/Documents/Care-ride-solution/care-ride-solutions-backend/src/main/java/com/care/ride/service/SesApiService.java
+/Users/chhabisharma/Documents/Care-ride-solution/care-ride-solutions-backend/src/main/java/com/care/ride/web/RootController.java
 /Users/chhabisharma/Documents/Care-ride-solution/care-ride-solutions-backend/src/main/java/com/care/ride/dto/ContactRequest.java
-/Users/chhabisharma/Documents/Care-ride-solution/care-ride-solutions-backend/src/main/java/com/care/ride/service/SendGridService.java
-/Users/chhabisharma/Documents/Care-ride-solution/care-ride-solutions-backend/src/main/java/com/care/ride/service/SendGridEmailService.java
 /Users/chhabisharma/Documents/Care-ride-solution/care-ride-solutions-backend/src/main/java/com/care/ride/config/SecurityConfig.java

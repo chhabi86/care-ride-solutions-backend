@@ -1,0 +1,71 @@
+package com.care.ride.service;
+
+import com.sendgrid.*;
+import com.sendgrid.helpers.mail.Mail;
+import com.sendgrid.helpers.mail.objects.Content;
+import com.sendgrid.helpers.mail.objects.Email;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
+
+import java.io.IOException;
+
+@Service
+public class SendGridEmailService {
+
+    private static final Logger logger = LoggerFactory.getLogger(SendGridEmailService.class);
+
+    @Value("${sendgrid.api.key:}")
+    private String sendGridApiKey;
+
+    @Value("${sendgrid.from.email:contact@careridesolutionspa.com}")
+    private String fromEmail;
+
+    @Value("${sendgrid.from.name:Care Ride Solutions}")
+    private String fromName;
+
+    public boolean sendEmail(String to, String subject, String text) {
+        if (sendGridApiKey == null || sendGridApiKey.trim().isEmpty()) {
+            logger.error("❌ SendGrid API key not configured");
+            return false;
+        }
+
+        try {
+            logger.info("=== SENDGRID EMAIL SEND ATTEMPT ===");
+            logger.info("From: {} <{}>", fromName, fromEmail);
+            logger.info("To: {}", to);
+            logger.info("Subject: {}", subject);
+            logger.info("API Key configured: {}", sendGridApiKey.startsWith("SG.") ? "YES" : "NO");
+
+            Email from = new Email(fromEmail, fromName);
+            Email toEmail = new Email(to);
+            Content content = new Content("text/plain", text);
+            Mail mail = new Mail(from, subject, toEmail, content);
+
+            SendGrid sg = new SendGrid(sendGridApiKey);
+            Request request = new Request();
+            request.setMethod(Method.POST);
+            request.setEndpoint("mail/send");
+            request.setBody(mail.build());
+
+            Response response = sg.api(request);
+            
+            if (response.getStatusCode() >= 200 && response.getStatusCode() < 300) {
+                logger.info("✅ SUCCESS: Email sent via SendGrid (status={})", response.getStatusCode());
+                return true;
+            } else {
+                logger.error("❌ FAILED: SendGrid returned status={}, body={}", 
+                    response.getStatusCode(), response.getBody());
+                return false;
+            }
+
+        } catch (IOException e) {
+            logger.error("❌ FAILED: SendGrid IOException", e);
+            return false;
+        } catch (Exception e) {
+            logger.error("❌ FAILED: SendGrid unexpected error", e);
+            return false;
+        }
+    }
+}

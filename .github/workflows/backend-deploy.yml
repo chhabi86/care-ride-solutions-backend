@@ -1,6 +1,14 @@
 name: Backend Deploy
 
 on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'pom.xml'
+      - 'src/**'
+      - 'nginx/**'
+      - 'deploy/**'
+      - '.github/workflows/backend-deploy.yml'
   workflow_dispatch:
     inputs:
       ref:

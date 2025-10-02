@@ -82,7 +82,7 @@ management:
 aws:
   ses:
     region: us-east-1
-  from-email: contact@careridesolutionspa.com
+    from-email: info@careridesolutionspa.com
 
 # AWS credentials (set as environment variables)
 # AWS_ACCESS_KEY_ID=AKIA2SLB633XJC5UAQVE
