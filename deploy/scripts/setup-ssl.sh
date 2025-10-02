@@ -6,7 +6,7 @@
 set -e
 
 DOMAIN="careridesolutionspa.com"
-EMAIL="info@careridesolutionspa.com"
+EMAIL="contact@careridesolutionspa.com"
 
 echo "=== SSL Certificate Installation for $DOMAIN ==="
 

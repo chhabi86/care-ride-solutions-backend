@@ -16,7 +16,7 @@ sudo tee /etc/systemd/system/care-ride-backend.service.d/env.conf > /dev/null <<
 [Service]
 Environment=\"MAIL_HOST=smtp.mail.us-east-1.awsapps.com\"
 Environment=\"MAIL_PORT=465\"
-Environment=\"MAIL_USERNAME=info@careridesolutionspa.com\"
+Environment=\"MAIL_USERNAME=contact@careridesolutionspa.com\"
 Environment=\"MAIL_PASSWORD=Transportation1@@\"
 Environment=\"MAIL_FROM=noreply@careridesolutionspa.com\"
 Environment=\"MAIL_DEBUG=false\"

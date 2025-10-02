@@ -100,28 +100,6 @@ public class PublicController {
 		return java.util.Map.of("status","ok","ts",System.currentTimeMillis());
 	}
 
-	@GetMapping("/health")
-	public String health() {
-		return "OK";
-	}
-
-	// Root path handler for api.careridesolutionspa.com
-	@GetMapping("/")
-	public java.util.Map<String,Object> root() {
-		return java.util.Map.of(
-			"service", "Care Ride Solutions API",
-			"version", "1.0.0",
-			"status", "running",
-			"timestamp", System.currentTimeMillis(),
-			"endpoints", java.util.List.of(
-				"/api/ping - Health check",
-				"/api/services - Get available services",
-				"/api/contact - Submit contact form",
-				"/api/bookings - Create booking"
-			)
-		);
-	}
-
 	@GetMapping("/services")
 	public List<ServiceType> services(){
 		return sRepo.findAll();
