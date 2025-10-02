@@ -157,4 +157,37 @@ public class PublicController {
 		result.put("sesApiTest", sesApiService.testSesConnection());
 		return result;
 	}
+
+	@PostMapping("/admin/load-services")
+	public ResponseEntity<?> loadServices() {
+		long count = sRepo.count();
+		if (count > 0) {
+			return ResponseEntity.ok(java.util.Map.of("message", "Services already exist", "count", count));
+		}
+		
+		// Create comprehensive service types
+		String[][] services = {
+			{"Doctor's Appointments", "Safe, timely rides for medical appointments"},
+			{"Hospital Visits", "Reliable transportation for emergency and scheduled hospital visits"},
+			{"Physical Therapy Sessions", "Comfortable rides to and from physical therapy sessions"},
+			{"Dialysis Treatment", "Dependable service for regular dialysis appointments"},
+			{"Chemotherapy Sessions", "Supportive rides to chemotherapy treatments"},
+			{"Radiation Therapy", "Safe transport for ongoing radiation therapy sessions"},
+			{"Medical Testing", "Easy access to labs and testing appointments"},
+			{"Surgery or Procedures", "Pre- and post-surgery transportation for procedures"},
+			{"Follow-Up Appointments", "Reliable rides for all post-surgery follow-ups"},
+			{"Hospital Discharge", "Safe rides home after hospital or rehab stays"},
+			{"Specialized Care", "Transportation to/from nursing or specialized care facilities"},
+			{"Ongoing Therapy", "Consistent rides for ongoing therapy and treatment"}
+		};
+		
+		for (String[] service : services) {
+			var st = new ServiceType();
+			st.setName(service[0]);
+			st.setDescription(service[1]);
+			sRepo.save(st);
+		}
+		
+		return ResponseEntity.ok(java.util.Map.of("message", "Services loaded successfully", "count", services.length));
+	}
 }
