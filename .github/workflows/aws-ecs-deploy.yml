@@ -21,7 +21,7 @@ env:
   ECR_REPOSITORY: care-ride-backend
   ECS_SERVICE: care-ride-backend-svc
   ECS_CLUSTER: care-ride-solutions-cluster
-  CONTAINER_NAME: care-ride-backend
+  CONTAINER_NAME: backend
 
 jobs:
   deploy:
