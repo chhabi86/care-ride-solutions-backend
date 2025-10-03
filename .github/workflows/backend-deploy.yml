@@ -28,7 +28,7 @@ concurrency:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    environment: production
+    # environment: production  # Temporarily removed - might be causing SSH key access issues
     permissions:
       contents: read
     env:
