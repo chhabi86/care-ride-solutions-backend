@@ -2,7 +2,16 @@
 
 This file is used to trigger GitHub Actions deployments.
 
-Last deployment trigger: 2025-09-25 11:20:00 UTC - SES credential sanitization rollout
+## Recent Deployment Triggers:
+
+**2025-10-03 12:20:00 UTC - Service Loading Fix Deployment**
+- Fixed empty aws-ecs-deploy.yml workflow file
+- Added comprehensive service types for booking functionality
+- DevDataLoader now runs in all environments
+- Manual /api/admin/load-services endpoint added
+- URGENT: Booking page requires service types to function
+
+**2025-09-25 11:20:00 UTC - SES credential sanitization rollout**
 - SendGrid HTTP API added as final email fallback
 - Triple fallback system: SMTP → SES → SendGrid
 - Added /api/debug/sendgrid endpoint

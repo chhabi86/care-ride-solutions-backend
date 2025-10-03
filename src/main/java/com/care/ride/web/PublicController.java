@@ -1,5 +1,6 @@
 package com.care.ride.web;
 
+// Deployment trigger: 2025-10-03 - Force redeploy for service loading fix
 import com.care.ride.domain.*;
 import com.care.ride.dto.BookingRequest;
 import com.care.ride.dto.ContactRequest;
