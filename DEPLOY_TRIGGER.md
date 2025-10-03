@@ -25,3 +25,4 @@ Last deployment trigger: 2025-09-25 11:20:00 UTC - SES credential sanitization r
 - SendGrid Java SDK (com.sendgrid:sendgrid-java:4.10.2)
 
 This ensures email delivery success even if both SMTP and AWS SES fail.
+# Deployment trigger Fri Oct  3 07:40:18 EDT 2025
